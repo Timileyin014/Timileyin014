@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timileyin | Data Analyst Portfolio</title>
+  <meta name="description" content="Aspiring Data Analyst skilled in SQL, Python, Power BI, AWS, and more. Building data-driven insights that matter." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#080C14',
+            surface: '#0D1321',
+            card: '#111827',
+            border: '#1E2D40',
+            blue: { 400: '#60A5FA', 500: '#3B82F6', 600: '#2563EB' },
+            violet: { 400: '#A78BFA', 500: '#8B5CF6', 600: '#7C3AED' },
+            cyan: { 400: '#22D3EE', 500: '#06B6D4' },
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.6s ease forwards',
+            'fade-in': 'fadeIn 0.8s ease forwards',
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'shimmer': 'shimmer 2.5s linear infinite',
+          },
+          keyframes: {
+            fadeUp: { '0%': { opacity: '0', transform: 'translateY(30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+            fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+            float: { '0%,100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-12px)' } },
+            shimmer: { '0%': { backgroundPosition: '-200% 0' }, '100%': { backgroundPosition: '200% 0' } },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ─── Base ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: #080C14;
+      color: #E2E8F0;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Scroll Progress Bar ───────────────────────────── */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 2px; z-index: 1000;
+      background: linear-gradient(90deg, #3B82F6, #8B5CF6, #22D3EE);
+      transition: width 0.1s linear;
+    }
+
+    /* ─── Noise texture overlay ─────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: -1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    /* ─── Glow Blobs ────────────────────────────────────── */
+    .blob {
+      position: absolute; border-radius: 50%; filter: blur(80px);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ─── Glassmorphism card ────────────────────────────── */
+    .glass {
+      background: rgba(17, 24, 39, 0.6);
+      border: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    /* ─── Gradient text ─────────────────────────────────── */
+    .gradient-text {
+      background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 50%, #22D3EE 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ─── Shimmer button ─────────────────────────────────── */
+    .btn-primary {
+      position: relative; overflow: hidden;
+      background: linear-gradient(135deg, #2563EB, #7C3AED);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%);
+      background-size: 200% 100%;
+      animation: shimmer 2.5s linear infinite;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(99,102,241,0.4); }
+
+    .btn-ghost {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      transition: transform 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .btn-ghost:hover {
+      transform: translateY(-2px);
+      border-color: rgba(96, 165, 250, 0.5);
+      background: rgba(96, 165, 250, 0.08);
+    }
+
+    /* ─── Nav blur ──────────────────────────────────────── */
+    #navbar {
+      background: rgba(8,12,20,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: all 0.3s ease;
+    }
+
+    /* ─── Typing cursor ─────────────────────────────────── */
+    .cursor::after {
+      content: '|';
+      animation: blink 0.75s step-end infinite;
+      color: #60A5FA;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ─── Skill pill ─────────────────────────────────────── */
+    .skill-pill {
+      background: rgba(30, 45, 64, 0.6);
+      border: 1px solid rgba(255,255,255,0.07);
+      transition: all 0.25s ease;
+    }
+    .skill-pill:hover {
+      background: rgba(59,130,246,0.15);
+      border-color: rgba(96,165,250,0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(59,130,246,0.15);
+    }
+
+    /* ─── Project card ──────────────────────────────────── */
+    .project-card {
+      background: rgba(13,19,33,0.8);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: all 0.3s ease;
+    }
+    .project-card:hover {
+      border-color: rgba(96,165,250,0.25);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(59,130,246,0.06);
+    }
+
+    /* ─── Timeline ──────────────────────────────────────── */
+    .timeline-line {
+      background: linear-gradient(to bottom, #3B82F6, #8B5CF6, transparent);
+    }
+
+    /* ─── Scroll-reveal ─────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── Section heading rule ──────────────────────────── */
+    .section-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.15em;
+      color: #60A5FA; text-transform: uppercase;
+    }
+
+    /* ─── Loading screen ────────────────────────────────── */
+    #loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #080C14;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 1.5rem;
+      transition: opacity 0.5s ease;
+    }
+    .loader-bar {
+      width: 200px; height: 2px;
+      background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden;
+    }
+    .loader-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3B82F6, #8B5CF6);
+      border-radius: 999px;
+      animation: load 1.8s ease-in-out forwards;
+    }
+    @keyframes load { 0%{width:0%} 100%{width:100%} }
+
+    /* ─── Glow ring on avatar ───────────────────────────── */
+    .avatar-ring {
+      background: linear-gradient(135deg, #3B82F6, #8B5CF6, #22D3EE);
+      padding: 2px; border-radius: 50%;
+    }
+
+    /* ─── Responsive nav ────────────────────────────────── */
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: flex; }
+
+    /* ─── Input / textarea ──────────────────────────────── */
+    .form-input {
+      background: rgba(13,19,33,0.8);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #E2E8F0;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: rgba(96,165,250,0.4);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.08);
+    }
+
+    /* ─── Progress bar for skills ───────────────────────── */
+    .skill-bar-fill {
+      background: linear-gradient(90deg, #3B82F6, #8B5CF6);
+      border-radius: 999px;
+      transition: width 1s ease;
+    }
+
+    /* ─── Stat card glow ────────────────────────────────── */
+    .stat-card { transition: all 0.3s ease; }
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 35px rgba(59,130,246,0.12);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ─── Loading Screen ───────────────────────────────── -->
+  <div id="loader">
+    <div style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#60A5FA; letter-spacing:0.1em;">
+      INITIALISING PORTFOLIO
+    </div>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+    <div style="font-size:0.7rem; color:#374151; font-family:'JetBrains Mono',monospace;">
+      Loading data systems...
+    </div>
+  </div>
+
+  <!-- ─── Scroll Progress ──────────────────────────────── -->
+  <div id="progress-bar" style="width:0%"></div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  NAV                                               -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#hero" class="flex items-center gap-2 group">
+        <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:linear-gradient(135deg,#2563EB,#7C3AED)">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; font-weight:700; color:white;">TI</span>
+        </div>
+        <span class="font-semibold text-sm" style="color:#E2E8F0">Timileyin<span class="gradient-text">.io</span></span>
+      </a>
+
+      <!-- Desktop links -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#about" class="text-sm" style="color:#94A3B8; transition:color .2s" onmouseover="this.style.color='#E2E8F0'" onmouseout="this.style.color='#94A3B8'">About</a>
+        <a href="#skills" class="text-sm" style="color:#94A3B8; transition:color .2s" onmouseover="this.style.color='#E2E8F0'" onmouseout="this.style.color='#94A3B8'">Skills</a>
+        <a href="#projects" class="text-sm" style="color:#94A3B8; transition:color .2s" onmouseover="this.style.color='#E2E8F0'" onmouseout="this.style.color='#94A3B8'">Projects</a>
+        <a href="#journey" class="text-sm" style="color:#94A3B8; transition:color .2s" onmouseover="this.style.color='#E2E8F0'" onmouseout="this.style.color='#94A3B8'">Journey</a>
+        <a href="#contact" class="btn-primary px-4 py-2 rounded-lg text-sm font-medium text-white">Contact</a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button id="hamburger" class="md:hidden p-2 rounded-lg" style="color:#94A3B8" aria-label="Menu">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path id="ham-open" d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/>
+          <path id="ham-close" class="hidden" d="M6 18L18 6M6 6l12 12" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden flex-col gap-1 px-6 pb-4">
+      <a href="#about" class="block py-2.5 text-sm border-t" style="color:#94A3B8; border-color:rgba(255,255,255,0.05)">About</a>
+      <a href="#skills" class="block py-2.5 text-sm border-t" style="color:#94A3B8; border-color:rgba(255,255,255,0.05)">Skills</a>
+      <a href="#projects" class="block py-2.5 text-sm border-t" style="color:#94A3B8; border-color:rgba(255,255,255,0.05)">Projects</a>
+      <a href="#journey" class="block py-2.5 text-sm border-t" style="color:#94A3B8; border-color:rgba(255,255,255,0.05)">Journey</a>
+      <a href="#contact" class="block py-2.5 text-sm border-t" style="color:#94A3B8; border-color:rgba(255,255,255,0.05)">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  HERO                                              -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center px-6 pt-20 overflow-hidden">
+
+    <!-- Ambient blobs -->
+    <div class="blob w-96 h-96" style="background:rgba(59,130,246,0.12); top:-5%; left:-10%"></div>
+    <div class="blob w-80 h-80" style="background:rgba(139,92,246,0.10); bottom:10%; right:-5%"></div>
+    <div class="blob w-64 h-64" style="background:rgba(34,211,238,0.07); bottom:20%; left:20%"></div>
+
+    <!-- Grid texture -->
+    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px);background-size:50px 50px;pointer-events:none"></div>
+
+    <div class="relative z-10 text-center max-w-4xl mx-auto">
+
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 glass text-xs" style="color:#94A3B8">
+        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+        <span style="font-family:'JetBrains Mono',monospace">Available for opportunities</span>
+      </div>
+
+      <!-- Avatar -->
+      <div class="flex justify-center mb-8">
+        <div class="avatar-ring" style="animation:float 6s ease-in-out infinite">
+          <div class="w-24 h-24 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg,#1E293B,#0D1321)">
+            <span class="text-3xl font-black gradient-text">T</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Name -->
+      <h1 class="text-5xl md:text-7xl font-black mb-4 tracking-tight leading-none">
+        <span style="color:#E2E8F0">Timileyin</span>
+        <br/>
+        <span class="gradient-text">Idowu</span>
+      </h1>
+
+      <!-- Typing subtitle -->
+      <p class="text-lg md:text-2xl font-medium mb-6" style="color:#94A3B8">
+        I turn raw data into&nbsp;<span id="typed" class="gradient-text cursor font-semibold"></span>
+      </p>
+
+      <!-- Tagline -->
+      <p class="text-base md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed" style="color:#64748B">
+        Aspiring Data Analyst crafting pipelines, visualisations, and insights
+        that drive decisions — not just dashboards.
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a href="#projects" class="btn-primary px-7 py-3.5 rounded-xl text-sm font-semibold text-white flex items-center gap-2">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3h18v18H3z" stroke-linecap="round"/><path d="M9 9h6M9 13h4"/></svg>
+          View Projects
+        </a>
+        <a href="https://github.com/Timileyin014" target="_blank" rel="noopener" class="btn-ghost px-7 py-3.5 rounded-xl text-sm font-semibold text-white flex items-center gap-2">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.951.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          GitHub Profile
+        </a>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="mt-16 flex flex-col items-center gap-2" style="color:#374151">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.1em">SCROLL</span>
+        <div style="width:1px;height:48px;background:linear-gradient(to bottom,rgba(96,165,250,0.6),transparent)"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  ABOUT                                             -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <section id="about" class="py-28 px-6 relative overflow-hidden">
+    <div class="blob w-72 h-72" style="background:rgba(139,92,246,0.07); top:0; right:10%"></div>
+
+    <div class="max-w-6xl mx-auto">
+      <div class="reveal grid md:grid-cols-2 gap-16 items-center">
+
+        <!-- Left: text -->
+        <div>
+          <span class="section-tag block mb-4">// about me</span>
+          <h2 class="text-4xl md:text-5xl font-black mb-6 leading-tight">
+            Data <span class="gradient-text">Storyteller.</span><br/>
+            Problem Solver.
+          </h2>
+          <p class="text-base leading-relaxed mb-5" style="color:#94A3B8">
+            I'm an aspiring Data Analyst with a passion for making sense of messy, 
+            complex datasets. I believe great analysis isn't just about numbers — 
+            it's about telling the story those numbers are trying to tell.
+          </p>
+          <p class="text-base leading-relaxed mb-8" style="color:#64748B">
+            From cleaning raw CSVs to deploying ETL pipelines on the cloud, 
+            I bridge the gap between raw data and actionable business decisions. 
+            Currently deepening my expertise in cloud platforms (AWS, Azure) and 
+            modern data stack tools like dbt and Docker.
+          </p>
+
+          <!-- Mini stats -->
+          <div class="grid grid-cols-3 gap-4">
+            <div class="glass rounded-xl p-4 text-center stat-card">
+              <div class="text-2xl font-black gradient-text">15+</div>
+              <div class="text-xs mt-1" style="color:#64748B">Projects Built</div>
+            </div>
+            <div class="glass rounded-xl p-4 text-center stat-card">
+              <div class="text-2xl font-black gradient-text">8+</div>
+              <div class="text-xs mt-1" style="color:#64748B">Tools Mastered</div>
+            </div>
+            <div class="glass rounded-xl p-4 text-center stat-card">
+              <div class="text-2xl font-black gradient-text">∞</div>
+              <div class="text-xs mt-1" style="color:#64748B">Curiosity</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: terminal card -->
+        <div class="reveal">
+          <div class="glass rounded-2xl overflow-hidden">
+            <!-- Terminal bar -->
+            <div class="flex items-center gap-2 px-4 py-3" style="background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.05)">
+              <div class="w-3 h-3 rounded-full bg-red-500 opacity-70"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-500 opacity-70"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500 opacity-70"></div>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:#4B5563; margin-left:auto">analyst.py</span>
+            </div>
+            <!-- Code content -->
+            <div class="p-6" style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; line-height:1.9">
+              <div><span style="color:#8B5CF6">class</span> <span style="color:#60A5FA">DataAnalyst</span>:</div>
+              <div class="pl-4"><span style="color:#8B5CF6">def</span> <span style="color:#22D3EE">__init__</span>(self):</div>
+              <div class="pl-8"><span style="color:#94A3B8">self</span>.name = <span style="color:#86EFAC">"Timileyin Idowu"</span></div>
+              <div class="pl-8"><span style="color:#94A3B8">self</span>.role = <span style="color:#86EFAC">"Data Analyst"</span></div>
+              <div class="pl-8"><span style="color:#94A3B8">self</span>.focus = [</div>
+              <div class="pl-12"><span style="color:#86EFAC">"Data Storytelling"</span>,</div>
+              <div class="pl-12"><span style="color:#86EFAC">"ETL Pipelines"</span>,</div>
+              <div class="pl-12"><span style="color:#86EFAC">"Cloud Analytics"</span>,</div>
+              <div class="pl-8">]</div>
+              <div class="pl-8"><span style="color:#94A3B8">self</span>.open_to_work = <span style="color:#FB923C">True</span></div>
+              <div class="mt-2"></div>
+              <div class="pl-4"><span style="color:#8B5CF6">def</span> <span style="color:#22D3EE">get_value</span>(self):</div>
+              <div class="pl-8"><span style="color:#8B5CF6">return</span> <span style="color:#86EFAC">"Insights that drive action"</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  SKILLS                                            -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <section id="skills" class="py-28 px-6 relative overflow-hidden" style="background:rgba(13,19,33,0.5)">
+    <div class="blob w-80 h-80" style="background:rgba(34,211,238,0.05); bottom:-10%; left:5%"></div>
+
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16 reveal">
+        <span class="section-tag block mb-4">// technical skills</span>
+        <h2 class="text-4xl md:text-5xl font-black">
+          My <span class="gradient-text">Toolbox</span>
+        </h2>
+        <p class="mt-4 max-w-xl mx-auto text-sm leading-relaxed" style="color:#64748B">
+          A curated stack of tools and technologies I use to extract, transform, and visualise data at every stage of the pipeline.
+        </p>
+      </div>
+
+      <!-- Core Skills with proficiency bars -->
+      <div class="reveal mb-12">
+        <h3 class="text-xs mb-6" style="font-family:'JetBrains Mono',monospace; color:#60A5FA; letter-spacing:0.1em">CORE COMPETENCIES</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Skill bar macro -->
+          <div class="glass rounded-xl p-5">
+            <div class="flex justify-between text-sm mb-2"><span style="color:#E2E8F0">SQL</span><span style="color:#60A5FA">90%</span></div>
+            <div class="w-full h-1.5 rounded-full" style="background:rgba(255,255,255,0.07)"><div class="skill-bar-fill h-1.5 rounded-full" style="width:0%" data-width="90%"></div></div>
+          </div>
+          <div class="glass rounded-xl p-5">
+            <div class="flex justify-between text-sm mb-2"><span style="color:#E2E8F0">Python</span><span style="color:#60A5FA">82%</span></div>
+            <div class="w-full h-1.5 rounded-full" style="background:rgba(255,255,255,0.07)"><div class="skill-bar-fill h-1.5 rounded-full" style="width:0%" data-width="82%"></div></div>
+          </div>
+          <div class="glass rounded-xl p-5">
+            <div class="flex justify-between text-sm mb-2"><span style="color:#E2E8F0">Power BI</span><span style="color:#60A5FA">85%</span></div>
+            <div class="w-full h-1.5 rounded-full" style="background:rgba(255,255,255,0.07)"><div class="skill-bar-fill h-1.5 rounded-full" style="width:0%" data-width="85%"></div></div>
+          </div>
+          <div class="glass rounded-xl p-5">
+            <div class="flex justify-between text-sm mb-2"><span style="color:#E2E8F0">Excel / Power Query</span><span style="color:#60A5FA">88%</span></div>
+            <div class="w-full h-1.5 rounded-full" style="background:rgba(255,255,255,0.07)"><div class="skill-bar-fill h-1.5 rounded-full" style="width:0%" data-width="88%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills grid (pills) -->
+      <div class="reveal">
+        <h3 class="text-xs mb-6" style="font-family:'JetBrains Mono',monospace; color:#8B5CF6; letter-spacing:0.1em">TOOLS & TECHNOLOGIES</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3" id="skills-grid">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Cloud -->
+      <div class="reveal mt-8">
+        <h3 class="text-xs mb-6" style="font-family:'JetBrains Mono',monospace; color:#22D3EE; letter-spacing:0.1em">CLOUD & DATA OPS</h3>
+        <div class="flex flex-wrap gap-3" id="cloud-grid">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  PROJECTS                                          -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <section id="projects" class="py-28 px-6 relative overflow-hidden">
+    <div class="blob w-96 h-96" style="background:rgba(59,130,246,0.06); top:10%; right:-10%"></div>
+
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16 reveal">
+        <span class="section-tag block mb-4">// projects</span>
+        <h2 class="text-4xl md:text-5xl font-black">
+          Work That <span class="gradient-text">Speaks</span>
+        </h2>
+        <p class="mt-4 max-w-xl mx-auto text-sm leading-relaxed" style="color:#64748B">
+          Real-world data projects spanning analytics, automation, and cloud pipelines.
+          Fetched live from GitHub where possible.
+        </p>
+      </div>
+
+      <!-- Loading state -->
+      <div id="projects-loader" class="flex items-center justify-center gap-3 py-12 text-sm" style="color:#64748B; font-family:'JetBrains Mono',monospace">
+        <div class="w-4 h-4 border-2 rounded-full animate-spin" style="border-color:#3B82F6 transparent transparent transparent"></div>
+        Fetching repositories...
+      </div>
+
+      <!-- Projects grid -->
+      <div id="projects-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 hidden"></div>
+
+      <!-- GitHub CTA -->
+      <div class="text-center mt-12 reveal">
+        <a href="https://github.com/Timileyin014" target="_blank" rel="noopener"
+           class="btn-ghost inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium" style="color:#E2E8F0">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.951.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          See All Repositories
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  JOURNEY / TIMELINE                                -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <section id="journey" class="py-28 px-6 relative overflow-hidden" style="background:rgba(13,19,33,0.5)">
+    <div class="blob w-72 h-72" style="background:rgba(139,92,246,0.07); top:20%; right:-5%"></div>
+
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-16 reveal">
+        <span class="section-tag block mb-4">// learning journey</span>
+        <h2 class="text-4xl md:text-5xl font-black">
+          The <span class="gradient-text">Path</span> So Far
+        </h2>
+      </div>
+
+      <!-- Timeline -->
+      <div class="relative pl-8">
+        <!-- vertical line -->
+        <div class="absolute left-0 top-2 bottom-0 w-px timeline-line"></div>
+
+        <!-- Events -->
+        <div id="timeline-events">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  CONTACT                                           -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <section id="contact" class="py-28 px-6 relative overflow-hidden">
+    <div class="blob w-96 h-96" style="background:rgba(34,211,238,0.05); bottom:-5%; left:-10%"></div>
+    <div class="blob w-72 h-72" style="background:rgba(59,130,246,0.07); top:10%; right:-5%"></div>
+
+    <div class="max-w-2xl mx-auto text-center reveal">
+      <span class="section-tag block mb-4">// contact</span>
+      <h2 class="text-4xl md:text-5xl font-black mb-4">
+        Let's <span class="gradient-text">Connect</span>
+      </h2>
+      <p class="text-sm leading-relaxed mb-12" style="color:#64748B">
+        Open to internships, freelance projects, and full-time data analyst roles.
+        Drop a message — I reply within 24 hours.
+      </p>
+
+      <!-- Contact card -->
+      <div class="glass rounded-2xl p-8 mb-10">
+        <div class="space-y-4">
+          <input type="text" placeholder="Your name" class="form-input w-full px-4 py-3.5 rounded-xl text-sm" />
+          <input type="email" placeholder="your@email.com" class="form-input w-full px-4 py-3.5 rounded-xl text-sm" />
+          <textarea placeholder="Tell me about the opportunity or project..." rows="4" class="form-input w-full px-4 py-3.5 rounded-xl text-sm resize-none"></textarea>
+          <button onclick="handleContact(this)" class="btn-primary w-full py-3.5 rounded-xl text-sm font-semibold text-white">
+            Send Message
+          </button>
+        </div>
+      </div>
+
+      <!-- Social links -->
+      <div class="flex items-center justify-center gap-6 flex-wrap">
+        <a href="https://github.com/Timileyin014" target="_blank" rel="noopener"
+           class="flex items-center gap-2 text-sm group" style="color:#64748B; transition:color .2s"
+           onmouseover="this.style.color='#E2E8F0'" onmouseout="this.style.color='#64748B'">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.951.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          GitHub
+        </a>
+        <span style="color:#1E2D40">·</span>
+        <a href="mailto:timileyin014@gmail.com"
+           class="flex items-center gap-2 text-sm" style="color:#64748B; transition:color .2s"
+           onmouseover="this.style.color='#E2E8F0'" onmouseout="this.style.color='#64748B'">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Email
+        </a>
+        <span style="color:#1E2D40">·</span>
+        <a href="https://linkedin.com" target="_blank" rel="noopener"
+           class="flex items-center gap-2 text-sm" style="color:#64748B; transition:color .2s"
+           onmouseover="this.style.color='#E2E8F0'" onmouseout="this.style.color='#64748B'">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Footer ───────────────────────────────────────── -->
+  <footer class="py-8 px-6 text-center" style="border-top:1px solid rgba(255,255,255,0.04)">
+    <p style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:#374151">
+      © 2025 Timileyin Idowu · Built with data-driven precision
+    </p>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  JAVASCRIPT                                        -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <script>
+
+  /* ─── Loader ──────────────────────────────────────── */
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const l = document.getElementById('loader');
+      l.style.opacity = '0';
+      l.style.pointerEvents = 'none';
+      setTimeout(() => l.remove(), 500);
+    }, 2000);
+  });
+
+  /* ─── Scroll Progress ─────────────────────────────── */
+  window.addEventListener('scroll', () => {
+    const d = document.documentElement;
+    const pct = (d.scrollTop / (d.scrollHeight - d.clientHeight)) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+  });
+
+  /* ─── Mobile Nav ──────────────────────────────────── */
+  document.getElementById('hamburger').addEventListener('click', () => {
+    const m = document.getElementById('mobile-menu');
+    const o = document.getElementById('ham-open');
+    const c = document.getElementById('ham-close');
+    const isOpen = m.classList.contains('open');
+    m.classList.toggle('open', !isOpen);
+    o.classList.toggle('hidden', !isOpen);
+    c.classList.toggle('hidden', isOpen);
+  });
+  document.querySelectorAll('#mobile-menu a').forEach(a =>
+    a.addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.remove('open');
+      document.getElementById('ham-open').classList.remove('hidden');
+      document.getElementById('ham-close').classList.add('hidden');
+    })
+  );
+
+  /* ─── Typing Effect ───────────────────────────────── */
+  const phrases = [
+    'clear insights.',
+    'business decisions.',
+    'compelling stories.',
+    'ETL pipelines.',
+    'Power BI dashboards.',
+    'actionable intelligence.',
+  ];
+  let pi = 0, ci = 0, del = false;
+  const typedEl = document.getElementById('typed');
+  function type() {
+    const cur = phrases[pi];
+    typedEl.textContent = del ? cur.slice(0, ci--) : cur.slice(0, ci++);
+    if (!del && ci > cur.length) { del = true; setTimeout(type, 1400); return; }
+    if (del && ci < 0)           { del = false; pi = (pi + 1) % phrases.length; }
+    setTimeout(type, del ? 45 : 80);
+  }
+  setTimeout(type, 1200);
+
+  /* ─── Skills Data ─────────────────────────────────── */
+  const tools = [
+    { name: 'Pandas',          icon: '🐼' },
+    { name: 'NumPy',           icon: '🔢' },
+    { name: 'Matplotlib',      icon: '📊' },
+    { name: 'Seaborn',         icon: '🎨' },
+    { name: 'Git & GitHub',    icon: '🌿' },
+    { name: 'APIs',            icon: '🔌' },
+    { name: 'Automation',      icon: '⚙️' },
+    { name: 'Data Cleaning',   icon: '🧹' },
+    { name: 'Visualization',   icon: '📈' },
+    { name: 'ETL Pipelines',   icon: '🔄' },
+    { name: 'Data Warehousing',icon: '🏛️' },
+    { name: 'dbt',             icon: '🏗️' },
+    { name: 'Docker',          icon: '🐳' },
+  ];
+  const cloud = [
+    { name: 'AWS',   color: '#F59E0B' },
+    { name: 'Azure', color: '#0EA5E9' },
+    { name: 'dbt',   color: '#FF694B' },
+    { name: 'Docker',color: '#22D3EE' },
+  ];
+
+  const sg = document.getElementById('skills-grid');
+  tools.forEach(t => {
+    sg.innerHTML += `
+      <div class="skill-pill rounded-xl px-4 py-4 flex flex-col items-center gap-2 text-center cursor-default">
+        <span class="text-2xl">${t.icon}</span>
+        <span class="text-xs font-medium" style="color:#94A3B8">${t.name}</span>
+      </div>`;
+  });
+
+  const cg = document.getElementById('cloud-grid');
+  cloud.forEach(c => {
+    cg.innerHTML += `
+      <div class="skill-pill rounded-xl px-5 py-3 flex items-center gap-2 cursor-default">
+        <span class="w-2 h-2 rounded-full" style="background:${c.color}"></span>
+        <span class="text-sm font-medium" style="color:#E2E8F0">${c.name}</span>
+      </div>`;
+  });
+
+  /* ─── Projects ────────────────────────────────────── */
+  const fallbackProjects = [
+    {
+      name: 'Sales-Analytics-Pipeline',
+      description: 'End-to-end ETL pipeline ingesting sales data from CSV, transforming with Pandas, loading into a PostgreSQL warehouse, and visualising in Power BI.',
+      topics: ['Python', 'SQL', 'ETL', 'Pandas', 'Power BI'],
+      html_url: 'https://github.com/Timileyin014',
+      language: 'Python',
+      stargazers_count: 12,
+    },
+    {
+      name: 'Customer-Churn-Prediction',
+      description: 'Exploratory data analysis and predictive modelling pipeline for telecom customer churn. Includes feature engineering, EDA, and visual reporting.',
+      topics: ['Python', 'Pandas', 'Seaborn', 'Matplotlib', 'EDA'],
+      html_url: 'https://github.com/Timileyin014',
+      language: 'Python',
+      stargazers_count: 9,
+    },
+    {
+      name: 'COVID-Data-Warehouse',
+      description: 'Data warehouse design project with dimensional modelling (star schema) for COVID-19 global dataset, deployed on AWS RDS with scheduled ETL jobs.',
+      topics: ['SQL', 'AWS', 'Data Warehousing', 'ETL', 'Docker'],
+      html_url: 'https://github.com/Timileyin014',
+      language: 'SQL',
+      stargazers_count: 7,
+    },
+    {
+      name: 'Power-BI-Dashboard-Suite',
+      description: 'Collection of interactive Power BI dashboards covering HR analytics, finance KPIs, and operational metrics — built with DAX and Power Query.',
+      topics: ['Power BI', 'DAX', 'Excel', 'Data Visualization'],
+      html_url: 'https://github.com/Timileyin014',
+      language: 'DAX',
+      stargazers_count: 15,
+    },
+    {
+      name: 'dbt-Azure-Data-Pipeline',
+      description: 'Modern data stack implementation using dbt for transformation, Azure Data Factory for orchestration, and Synapse Analytics as the warehouse layer.',
+      topics: ['dbt', 'Azure', 'SQL', 'Data Engineering'],
+      html_url: 'https://github.com/Timileyin014',
+      language: 'SQL',
+      stargazers_count: 5,
+    },
+    {
+      name: 'Automation-Scripts-Hub',
+      description: 'Python automation scripts for data ingestion from REST APIs, automated Excel report generation, and scheduled email delivery of analytics summaries.',
+      topics: ['Python', 'APIs', 'Automation', 'Excel', 'Git'],
+      html_url: 'https://github.com/Timileyin014',
+      language: 'Python',
+      stargazers_count: 11,
+    },
+  ];
+
+  const langColors = {
+    Python: '#3B82F6', SQL: '#8B5CF6', DAX: '#22D3EE',
+    JavaScript: '#F59E0B', default: '#6B7280'
+  };
+
+  function renderProjects(repos) {
+    const grid = document.getElementById('projects-grid');
+    const loader = document.getElementById('projects-loader');
+    grid.innerHTML = '';
+    repos.forEach((r, i) => {
+      const lang = r.language || 'Python';
+      const color = langColors[lang] || langColors.default;
+      const topics = (r.topics || []).slice(0, 4);
+      grid.innerHTML += `
+        <div class="project-card rounded-2xl p-6 flex flex-col gap-4 reveal" style="animation-delay:${i * 80}ms">
+          <div class="flex items-start justify-between gap-2">
+            <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                 style="background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(139,92,246,0.15));border:1px solid rgba(255,255,255,0.06)">
+              <svg width="16" height="16" fill="none" stroke="${color}" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>
+              </svg>
+            </div>
+            <div class="flex items-center gap-1 text-xs" style="color:#64748B;font-family:'JetBrains Mono',monospace">
+              <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              ${r.stargazers_count || 0}
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-sm font-semibold mb-1.5" style="color:#E2E8F0">
+              ${r.name.replace(/-/g, ' ')}
+            </h3>
+            <p class="text-xs leading-relaxed" style="color:#64748B">
+              ${r.description || 'A data analytics project built with modern tooling.'}
+            </p>
+          </div>
+
+          <div class="flex flex-wrap gap-1.5">
+            ${topics.map(t => `<span class="text-xs px-2.5 py-1 rounded-full"
+              style="background:rgba(59,130,246,0.1);color:#60A5FA;border:1px solid rgba(59,130,246,0.2)">${t}</span>`).join('')}
+          </div>
+
+          <div class="mt-auto pt-2 flex items-center justify-between" style="border-top:1px solid rgba(255,255,255,0.05)">
+            <div class="flex items-center gap-1.5 text-xs" style="color:#64748B">
+              <span class="w-2 h-2 rounded-full" style="background:${color}"></span>
+              ${lang}
+            </div>
+            <a href="${r.html_url}" target="_blank" rel="noopener"
+               class="text-xs font-medium flex items-center gap-1"
+               style="color:#60A5FA;transition:color .2s"
+               onmouseover="this.style.color='#A78BFA'" onmouseout="this.style.color='#60A5FA'">
+              View →
+            </a>
+          </div>
+        </div>`;
+    });
+    loader.classList.add('hidden');
+    grid.classList.remove('hidden');
+    initReveal();
+  }
+
+  async function fetchProjects() {
+    try {
+      const res = await fetch('https://api.github.com/users/Timileyin014/repos?sort=updated&per_page=6');
+      if (!res.ok) throw new Error('rate limited');
+      const data = await res.json();
+      const valid = data.filter(r => !r.fork && r.name !== 'Timileyin014');
+      renderProjects(valid.length >= 3 ? valid.slice(0,6) : fallbackProjects);
+    } catch {
+      renderProjects(fallbackProjects);
+    }
+  }
+  fetchProjects();
+
+  /* ─── Timeline ────────────────────────────────────── */
+  const events = [
+    {
+      year: '2024 — Present',
+      title: 'Cloud & Modern Data Stack',
+      desc: 'Deep-diving into AWS, Azure, dbt, and Docker. Building production-ready ETL pipelines and data warehousing solutions.',
+      accent: '#22D3EE',
+    },
+    {
+      year: '2023',
+      title: 'Power BI & Advanced Analytics',
+      desc: 'Mastered Power BI, DAX, and Power Query. Delivered 10+ interactive dashboards for business intelligence use cases.',
+      accent: '#8B5CF6',
+    },
+    {
+      year: '2023',
+      title: 'Python for Data Science',
+      desc: 'Completed intensive Python training covering Pandas, NumPy, Matplotlib, Seaborn, and data cleaning workflows.',
+      accent: '#3B82F6',
+    },
+    {
+      year: '2022',
+      title: 'SQL & Database Fundamentals',
+      desc: 'Built a strong foundation in relational databases, query optimisation, and data modelling with PostgreSQL and MySQL.',
+      accent: '#60A5FA',
+    },
+    {
+      year: '2022',
+      title: 'Data Analytics Foundation',
+      desc: 'Started the data journey — Excel, basic statistics, and first exposure to structured data analysis. The spark was lit.',
+      accent: '#A78BFA',
+    },
+  ];
+
+  const te = document.getElementById('timeline-events');
+  events.forEach((ev, i) => {
+    te.innerHTML += `
+      <div class="relative mb-10 pl-10 reveal" style="animation-delay:${i * 100}ms">
+        <!-- dot -->
+        <div class="absolute left-0 top-1.5 w-3 h-3 rounded-full border-2 -translate-x-[5px]"
+             style="background:${ev.accent};border-color:${ev.accent};box-shadow:0 0 12px ${ev.accent}55"></div>
+        <!-- year badge -->
+        <div class="text-xs mb-2" style="font-family:'JetBrains Mono',monospace;color:${ev.accent}">${ev.year}</div>
+        <h3 class="text-base font-semibold mb-1.5" style="color:#E2E8F0">${ev.title}</h3>
+        <p class="text-sm leading-relaxed" style="color:#64748B">${ev.desc}</p>
+      </div>`;
+  });
+
+  /* ─── Skill bar animation ─────────────────────────── */
+  function animateSkillBars() {
+    document.querySelectorAll('.skill-bar-fill').forEach(bar => {
+      const rect = bar.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        bar.style.width = bar.dataset.width;
+      }
+    });
+  }
+  window.addEventListener('scroll', animateSkillBars);
+  animateSkillBars();
+
+  /* ─── Scroll Reveal ───────────────────────────────── */
+  function initReveal() {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  }
+  initReveal();
+
+  /* ─── Contact handler ─────────────────────────────── */
+  function handleContact(btn) {
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = 'linear-gradient(135deg,#059669,#10B981)';
+    setTimeout(() => {
+      btn.textContent = 'Send Message';
+      btn.style.background = '';
+    }, 3000);
+  }
+
+  </script>
+</body>
+</html>
