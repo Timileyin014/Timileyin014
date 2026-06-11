@@ -1,48 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Timileyin | Data Analyst Portfolio</title>
-  <meta name="description" content="Aspiring Data Analyst skilled in SQL, Python, Power BI, AWS, and more. Building data-driven insights that matter." />
+  <title>Timileyin — AI Data Specialist & QA Analyst</title>
 
-  <!-- Fonts -->
+  <!-- Google Fonts: Inter for body, Space Grotesk for display -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-  <!-- Tailwind CDN -->
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <script>
+    // ─── Tailwind config ────────────────────────────────────────────────────
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            bg: '#080C14',
-            surface: '#0D1321',
-            card: '#111827',
-            border: '#1E2D40',
-            blue: { 400: '#60A5FA', 500: '#3B82F6', 600: '#2563EB' },
-            violet: { 400: '#A78BFA', 500: '#8B5CF6', 600: '#7C3AED' },
-            cyan: { 400: '#22D3EE', 500: '#06B6D4' },
+            cosmic:   '#090D16',
+            surface:  '#0E1420',
+            panel:    '#131929',
+            border:   '#1E2A40',
+            indigo:   '#5B6AF0',
+            electric: '#818CF8',
+            cyan:     '#22D3EE',
+            violet:   '#A78BFA',
+            silver:   '#8896B0',
+            dim:      '#4B5673',
           },
           fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          },
-          animation: {
-            'fade-up': 'fadeUp 0.6s ease forwards',
-            'fade-in': 'fadeIn 0.8s ease forwards',
-            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            'float': 'float 6s ease-in-out infinite',
-            'shimmer': 'shimmer 2.5s linear infinite',
-          },
-          keyframes: {
-            fadeUp: { '0%': { opacity: '0', transform: 'translateY(30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-            fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-            float: { '0%,100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-12px)' } },
-            shimmer: { '0%': { backgroundPosition: '-200% 0' }, '100%': { backgroundPosition: '200% 0' } },
+            display: ['Space Grotesk', 'sans-serif'],
+            body:    ['Inter',        'sans-serif'],
+            mono:    ['JetBrains Mono', 'monospace'],
           },
         },
       },
@@ -50,893 +41,1363 @@
   </script>
 
   <style>
-    /* ─── Base ─────────────────────────────────────────── */
+    /* ─── Global reset & base ──────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      background-color: #080C14;
+      background: #090D16;
       color: #E2E8F0;
       font-family: 'Inter', sans-serif;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ─── Scroll Progress Bar ───────────────────────────── */
-    #progress-bar {
-      position: fixed; top: 0; left: 0; height: 2px; z-index: 1000;
-      background: linear-gradient(90deg, #3B82F6, #8B5CF6, #22D3EE);
-      transition: width 0.1s linear;
-    }
-
-    /* ─── Noise texture overlay ─────────────────────────── */
+    /* ─── Noise texture overlay ────────────────────────────────────────────── */
     body::before {
       content: '';
-      position: fixed; inset: 0; z-index: -1;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      position: fixed; inset: 0; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
       pointer-events: none;
     }
 
-    /* ─── Glow Blobs ────────────────────────────────────── */
-    .blob {
-      position: absolute; border-radius: 50%; filter: blur(80px);
-      pointer-events: none; z-index: 0;
+    /* ─── Ambient gradient orbs ────────────────────────────────────────────── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+      animation: drift 20s ease-in-out infinite alternate;
+    }
+    .orb-1 { width: 600px; height: 600px; background: #5B6AF0; top: -200px; left: -200px; }
+    .orb-2 { width: 500px; height: 500px; background: #22D3EE; bottom: 10%; right: -150px; animation-delay: -10s; }
+    .orb-3 { width: 400px; height: 400px; background: #A78BFA; top: 40%; left: 30%; animation-delay: -5s; }
+    @keyframes drift {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(40px, 30px) scale(1.05); }
     }
 
-    /* ─── Glassmorphism card ────────────────────────────── */
-    .glass {
-      background: rgba(17, 24, 39, 0.6);
-      border: 1px solid rgba(255,255,255,0.06);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
+    /* ─── Content layer above orbs ─────────────────────────────────────────── */
+    .z-content { position: relative; z-index: 1; }
 
-    /* ─── Gradient text ─────────────────────────────────── */
-    .gradient-text {
-      background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 50%, #22D3EE 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* ─── Shimmer button ─────────────────────────────────── */
-    .btn-primary {
-      position: relative; overflow: hidden;
-      background: linear-gradient(135deg, #2563EB, #7C3AED);
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .btn-primary::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%);
-      background-size: 200% 100%;
-      animation: shimmer 2.5s linear infinite;
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(99,102,241,0.4); }
-
-    .btn-ghost {
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.04);
-      transition: transform 0.2s, border-color 0.2s, background 0.2s;
-    }
-    .btn-ghost:hover {
-      transform: translateY(-2px);
-      border-color: rgba(96, 165, 250, 0.5);
-      background: rgba(96, 165, 250, 0.08);
-    }
-
-    /* ─── Nav blur ──────────────────────────────────────── */
+    /* ─── Navigation ───────────────────────────────────────────────────────── */
     #navbar {
-      background: rgba(8,12,20,0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      transition: all 0.3s ease;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
     }
+    #navbar.scrolled {
+      background: rgba(9, 13, 22, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid #1E2A40;
+    }
+    .nav-link {
+      position: relative;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: #8896B0;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, #5B6AF0, #22D3EE);
+      transform: scaleX(0);
+      transition: transform 0.25s;
+    }
+    .nav-link:hover { color: #E2E8F0; }
+    .nav-link:hover::after { transform: scaleX(1); }
 
-    /* ─── Typing cursor ─────────────────────────────────── */
-    .cursor::after {
+    /* ─── Hero typing cursor ───────────────────────────────────────────────── */
+    #typed-text::after {
       content: '|';
-      animation: blink 0.75s step-end infinite;
-      color: #60A5FA;
+      animation: blink 1s step-end infinite;
+      color: #22D3EE;
     }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-    /* ─── Skill pill ─────────────────────────────────────── */
-    .skill-pill {
-      background: rgba(30, 45, 64, 0.6);
-      border: 1px solid rgba(255,255,255,0.07);
-      transition: all 0.25s ease;
-    }
-    .skill-pill:hover {
-      background: rgba(59,130,246,0.15);
-      border-color: rgba(96,165,250,0.4);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(59,130,246,0.15);
+    /* ─── Gradient text ────────────────────────────────────────────────────── */
+    .grad-text {
+      background: linear-gradient(135deg, #818CF8 0%, #22D3EE 50%, #A78BFA 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    /* ─── Project card ──────────────────────────────────── */
-    .project-card {
-      background: rgba(13,19,33,0.8);
-      border: 1px solid rgba(255,255,255,0.06);
-      transition: all 0.3s ease;
+    /* ─── CTA buttons ──────────────────────────────────────────────────────── */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, #5B6AF0, #818CF8);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+      box-shadow: 0 0 0 0 rgba(91,106,240,0);
     }
-    .project-card:hover {
-      border-color: rgba(96,165,250,0.25);
-      transform: translateY(-5px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(59,130,246,0.06);
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.15);
+      box-shadow: 0 8px 32px rgba(91,106,240,0.4);
+    }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 28px;
+      border: 1px solid #1E2A40;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #8896B0;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s, background 0.2s;
+      background: transparent;
+    }
+    .btn-ghost:hover {
+      border-color: #5B6AF0;
+      color: #E2E8F0;
+      background: rgba(91,106,240,0.08);
+      transform: translateY(-2px);
     }
 
-    /* ─── Timeline ──────────────────────────────────────── */
+    /* ─── Glass cards ──────────────────────────────────────────────────────── */
+    .glass-card {
+      background: rgba(19, 25, 41, 0.6);
+      border: 1px solid #1E2A40;
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+    .glass-card:hover {
+      border-color: rgba(91,106,240,0.4);
+      box-shadow: 0 0 40px rgba(91,106,240,0.12), 0 20px 60px rgba(0,0,0,0.4);
+      transform: translateY(-4px);
+    }
+
+    /* ─── Skill badges ─────────────────────────────────────────────────────── */
+    .skill-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 16px;
+      border: 1px solid #1E2A40;
+      border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: #8896B0;
+      background: rgba(14, 20, 32, 0.7);
+      transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s;
+      cursor: default;
+      white-space: nowrap;
+    }
+    .skill-badge:hover {
+      border-color: rgba(91,106,240,0.6);
+      color: #E2E8F0;
+      background: rgba(91,106,240,0.08);
+      transform: translateY(-2px);
+    }
+    .skill-badge .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ─── Section label eyebrow ────────────────────────────────────────────── */
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #5B6AF0;
+    }
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px; height: 1px;
+      background: linear-gradient(90deg, #5B6AF0, #22D3EE);
+    }
+
+    /* ─── Timeline ─────────────────────────────────────────────────────────── */
     .timeline-line {
-      background: linear-gradient(to bottom, #3B82F6, #8B5CF6, transparent);
+      position: absolute;
+      left: 20px; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, #1E2A40 10%, #1E2A40 90%, transparent);
+    }
+    .timeline-dot {
+      position: absolute;
+      left: 12px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #5B6AF0, #22D3EE);
+      box-shadow: 0 0 16px rgba(91,106,240,0.6);
+      z-index: 2;
     }
 
-    /* ─── Scroll-reveal ─────────────────────────────────── */
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    /* ─── Project tag chips ────────────────────────────────────────────────── */
+    .tag {
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+
+    /* ─── Scroll-reveal base ───────────────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* ─── Section heading rule ──────────────────────────── */
-    .section-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem; letter-spacing: 0.15em;
-      color: #60A5FA; text-transform: uppercase;
+    /* ─── Progress bars ────────────────────────────────────────────────────── */
+    .bar-track {
+      height: 3px;
+      background: #1E2A40;
+      border-radius: 3px;
+      overflow: hidden;
     }
-
-    /* ─── Loading screen ────────────────────────────────── */
-    #loader {
-      position: fixed; inset: 0; z-index: 9999;
-      background: #080C14;
-      display: flex; align-items: center; justify-content: center;
-      flex-direction: column; gap: 1.5rem;
-      transition: opacity 0.5s ease;
-    }
-    .loader-bar {
-      width: 200px; height: 2px;
-      background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden;
-    }
-    .loader-fill {
+    .bar-fill {
       height: 100%;
-      background: linear-gradient(90deg, #3B82F6, #8B5CF6);
-      border-radius: 999px;
-      animation: load 1.8s ease-in-out forwards;
-    }
-    @keyframes load { 0%{width:0%} 100%{width:100%} }
-
-    /* ─── Glow ring on avatar ───────────────────────────── */
-    .avatar-ring {
-      background: linear-gradient(135deg, #3B82F6, #8B5CF6, #22D3EE);
-      padding: 2px; border-radius: 50%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, #5B6AF0, #22D3EE);
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
     }
 
-    /* ─── Responsive nav ────────────────────────────────── */
-    #mobile-menu { display: none; }
-    #mobile-menu.open { display: flex; }
-
-    /* ─── Input / textarea ──────────────────────────────── */
-    .form-input {
-      background: rgba(13,19,33,0.8);
-      border: 1px solid rgba(255,255,255,0.08);
+    /* ─── Contact input fields ─────────────────────────────────────────────── */
+    .field {
+      width: 100%;
+      padding: 14px 18px;
+      background: rgba(14, 20, 32, 0.8);
+      border: 1px solid #1E2A40;
+      border-radius: 10px;
       color: #E2E8F0;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .form-input:focus {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
       outline: none;
-      border-color: rgba(96,165,250,0.4);
-      box-shadow: 0 0 0 3px rgba(59,130,246,0.08);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      resize: none;
+    }
+    .field:focus {
+      border-color: #5B6AF0;
+      box-shadow: 0 0 0 3px rgba(91,106,240,0.12);
+    }
+    .field::placeholder { color: #4B5673; }
+
+    /* ─── Stat counters ────────────────────────────────────────────────────── */
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.25rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #818CF8, #22D3EE);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
     }
 
-    /* ─── Progress bar for skills ───────────────────────── */
-    .skill-bar-fill {
-      background: linear-gradient(90deg, #3B82F6, #8B5CF6);
-      border-radius: 999px;
-      transition: width 1s ease;
+    /* ─── Mobile nav toggle ────────────────────────────────────────────────── */
+    #mobile-menu {
+      display: none;
+      background: rgba(9,13,22,0.97);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid #1E2A40;
+    }
+    #mobile-menu.open { display: block; }
+
+    /* ─── Glow divider ─────────────────────────────────────────────────────── */
+    .glow-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #1E2A40 20%, #1E2A40 80%, transparent);
     }
 
-    /* ─── Stat card glow ────────────────────────────────── */
-    .stat-card { transition: all 0.3s ease; }
-    .stat-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 0 35px rgba(59,130,246,0.12);
+    /* ─── Section spacing ──────────────────────────────────────────────────── */
+    section { padding: 96px 0; }
+
+    /* ─── Responsive helpers ───────────────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { transition: none !important; opacity: 1 !important; transform: none !important; }
+      .orb    { animation: none; }
+      #typed-text::after { animation: none; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ─── Loading Screen ───────────────────────────────── -->
-  <div id="loader">
-    <div style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#60A5FA; letter-spacing:0.1em;">
-      INITIALISING PORTFOLIO
-    </div>
-    <div class="loader-bar"><div class="loader-fill"></div></div>
-    <div style="font-size:0.7rem; color:#374151; font-family:'JetBrains Mono',monospace;">
-      Loading data systems...
-    </div>
-  </div>
+  <!-- ████ AMBIENT ORBS ████ -->
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
+  <div class="orb orb-3" aria-hidden="true"></div>
 
-  <!-- ─── Scroll Progress ──────────────────────────────── -->
-  <div id="progress-bar" style="width:0%"></div>
-
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!--  NAV                                               -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50">
+  <!-- ████████████████ NAVIGATION ████████████████ -->
+  <nav id="navbar" aria-label="Primary navigation">
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <!-- Logo -->
-      <a href="#hero" class="flex items-center gap-2 group">
-        <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:linear-gradient(135deg,#2563EB,#7C3AED)">
-          <span style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; font-weight:700; color:white;">TI</span>
-        </div>
-        <span class="font-semibold text-sm" style="color:#E2E8F0">Timileyin<span class="gradient-text">.io</span></span>
+
+      <!-- Wordmark -->
+      <a href="#hero" class="font-display font-700 text-base text-white tracking-tight flex items-center gap-2 z-content">
+        <span style="background:linear-gradient(135deg,#5B6AF0,#22D3EE);padding:5px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;font-weight:600;color:#fff;letter-spacing:0.05em;">TL</span>
+        <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;color:#E2E8F0;">Timileyin</span>
       </a>
 
       <!-- Desktop links -->
-      <div class="hidden md:flex items-center gap-8">
-        <a href="#about" class="text-sm" style="color:#94A3B8; transition:color .2s" onmouseover="this.style.color='#E2E8F0'" onmouseout="this.style.color='#94A3B8'">About</a>
-        <a href="#skills" class="text-sm" style="color:#94A3B8; transition:color .2s" onmouseover="this.style.color='#E2E8F0'" onmouseout="this.style.color='#94A3B8'">Skills</a>
-        <a href="#projects" class="text-sm" style="color:#94A3B8; transition:color .2s" onmouseover="this.style.color='#E2E8F0'" onmouseout="this.style.color='#94A3B8'">Projects</a>
-        <a href="#journey" class="text-sm" style="color:#94A3B8; transition:color .2s" onmouseover="this.style.color='#E2E8F0'" onmouseout="this.style.color='#94A3B8'">Journey</a>
-        <a href="#contact" class="btn-primary px-4 py-2 rounded-lg text-sm font-medium text-white">Contact</a>
+      <div class="hidden md:flex items-center gap-8 z-content">
+        <a href="#about"    class="nav-link">About</a>
+        <a href="#skills"   class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#timeline" class="nav-link">Experience</a>
+        <a href="#contact"  class="nav-link">Contact</a>
       </div>
 
-      <!-- Mobile hamburger -->
-      <button id="hamburger" class="md:hidden p-2 rounded-lg" style="color:#94A3B8" aria-label="Menu">
-        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path id="ham-open" d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/>
-          <path id="ham-close" class="hidden" d="M6 18L18 6M6 6l12 12" stroke-linecap="round"/>
+      <!-- GitHub CTA -->
+      <a href="https://github.com/Timileyin014" target="_blank" rel="noopener"
+         class="hidden md:inline-flex items-center gap-2 btn-ghost z-content" style="padding:9px 18px;">
+        <!-- GitHub icon -->
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
         </svg>
+        GitHub
+      </a>
+
+      <!-- Mobile hamburger -->
+      <button id="hamburger" class="md:hidden z-content flex flex-col gap-1.5 p-2" aria-label="Toggle menu" aria-expanded="false">
+        <span class="block w-5 h-0.5 bg-silver transition-all"></span>
+        <span class="block w-5 h-0.5 bg-silver transition-all"></span>
+        <span class="block w-5 h-0.5 bg-silver transition-all"></span>
       </button>
     </div>
 
     <!-- Mobile menu -->
-    <div id="mobile-menu" class="md:hidden flex-col gap-1 px-6 pb-4">
-      <a href="#about" class="block py-2.5 text-sm border-t" style="color:#94A3B8; border-color:rgba(255,255,255,0.05)">About</a>
-      <a href="#skills" class="block py-2.5 text-sm border-t" style="color:#94A3B8; border-color:rgba(255,255,255,0.05)">Skills</a>
-      <a href="#projects" class="block py-2.5 text-sm border-t" style="color:#94A3B8; border-color:rgba(255,255,255,0.05)">Projects</a>
-      <a href="#journey" class="block py-2.5 text-sm border-t" style="color:#94A3B8; border-color:rgba(255,255,255,0.05)">Journey</a>
-      <a href="#contact" class="block py-2.5 text-sm border-t" style="color:#94A3B8; border-color:rgba(255,255,255,0.05)">Contact</a>
+    <div id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+      <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-4">
+        <a href="#about"    class="nav-link py-2">About</a>
+        <a href="#skills"   class="nav-link py-2">Skills</a>
+        <a href="#projects" class="nav-link py-2">Projects</a>
+        <a href="#timeline" class="nav-link py-2">Experience</a>
+        <a href="#contact"  class="nav-link py-2">Contact</a>
+        <a href="https://github.com/Timileyin014" target="_blank" rel="noopener" class="btn-ghost w-max mt-2">
+          GitHub Profile ↗
+        </a>
+      </div>
     </div>
   </nav>
+  <!-- /#navbar -->
 
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!--  HERO                                              -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center px-6 pt-20 overflow-hidden">
 
-    <!-- Ambient blobs -->
-    <div class="blob w-96 h-96" style="background:rgba(59,130,246,0.12); top:-5%; left:-10%"></div>
-    <div class="blob w-80 h-80" style="background:rgba(139,92,246,0.10); bottom:10%; right:-5%"></div>
-    <div class="blob w-64 h-64" style="background:rgba(34,211,238,0.07); bottom:20%; left:20%"></div>
+  <!-- ████████████████ HERO ████████████████ -->
+  <section id="hero" class="z-content relative min-h-screen flex items-center" style="padding-top:80px;">
+    <div class="max-w-6xl mx-auto px-6 w-full">
 
-    <!-- Grid texture -->
-    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px);background-size:50px 50px;pointer-events:none"></div>
-
-    <div class="relative z-10 text-center max-w-4xl mx-auto">
-
-      <!-- Badge -->
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 glass text-xs" style="color:#94A3B8">
-        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-        <span style="font-family:'JetBrains Mono',monospace">Available for opportunities</span>
+      <!-- Status pill -->
+      <div class="reveal flex items-center gap-3 mb-8">
+        <span style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid rgba(34,211,238,0.25);border-radius:999px;background:rgba(34,211,238,0.05);font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#22D3EE;letter-spacing:0.08em;">
+          <span style="width:6px;height:6px;background:#22D3EE;border-radius:50%;box-shadow:0 0 8px #22D3EE;animation:pulse 2s ease-in-out infinite;" aria-hidden="true"></span>
+          AVAILABLE FOR PROJECTS
+        </span>
       </div>
 
-      <!-- Avatar -->
-      <div class="flex justify-center mb-8">
-        <div class="avatar-ring" style="animation:float 6s ease-in-out infinite">
-          <div class="w-24 h-24 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg,#1E293B,#0D1321)">
-            <span class="text-3xl font-black gradient-text">T</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Name -->
-      <h1 class="text-5xl md:text-7xl font-black mb-4 tracking-tight leading-none">
-        <span style="color:#E2E8F0">Timileyin</span>
-        <br/>
-        <span class="gradient-text">Idowu</span>
+      <!-- Main headline -->
+      <h1 class="reveal font-display text-white leading-tight mb-4" style="font-size:clamp(2.5rem,7vw,5.5rem);font-weight:700;letter-spacing:-0.02em;transition-delay:0.1s;">
+        Precision AI Data<br/>
+        <span class="grad-text">Specialist & QA Analyst.</span>
       </h1>
 
       <!-- Typing subtitle -->
-      <p class="text-lg md:text-2xl font-medium mb-6" style="color:#94A3B8">
-        I turn raw data into&nbsp;<span id="typed" class="gradient-text cursor font-semibold"></span>
-      </p>
+      <div class="reveal mb-8" style="transition-delay:0.2s;">
+        <p style="font-family:'JetBrains Mono',monospace;font-size:clamp(0.85rem,2vw,1.05rem);color:#5B6AF0;letter-spacing:0.04em;">
+          &gt; <span id="typed-text"></span>
+        </p>
+      </div>
 
-      <!-- Tagline -->
-      <p class="text-base md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed" style="color:#64748B">
-        Aspiring Data Analyst crafting pipelines, visualisations, and insights
-        that drive decisions — not just dashboards.
+      <!-- Bio line -->
+      <p class="reveal text-silver leading-relaxed mb-10 max-w-xl" style="font-size:1.0625rem;transition-delay:0.3s;">
+        Architecting high-fidelity training datasets, evaluating LLM alignment under adversarial conditions, and engineering data pipelines that turn noise into signal.
       </p>
 
       <!-- CTAs -->
-      <div class="flex flex-wrap items-center justify-center gap-4">
-        <a href="#projects" class="btn-primary px-7 py-3.5 rounded-xl text-sm font-semibold text-white flex items-center gap-2">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3h18v18H3z" stroke-linecap="round"/><path d="M9 9h6M9 13h4"/></svg>
-          View Projects
+      <div class="reveal flex flex-wrap gap-4 mb-16" style="transition-delay:0.4s;">
+        <a href="#projects" class="btn-primary">
+          Explore Case Studies
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="https://github.com/Timileyin014" target="_blank" rel="noopener" class="btn-ghost px-7 py-3.5 rounded-xl text-sm font-semibold text-white flex items-center gap-2">
-          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.951.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-          GitHub Profile
+        <a href="https://github.com/Timileyin014" target="_blank" rel="noopener" class="btn-ghost">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          View GitHub
         </a>
       </div>
 
-      <!-- Scroll indicator -->
-      <div class="mt-16 flex flex-col items-center gap-2" style="color:#374151">
-        <span style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.1em">SCROLL</span>
-        <div style="width:1px;height:48px;background:linear-gradient(to bottom,rgba(96,165,250,0.6),transparent)"></div>
+      <!-- Stats row -->
+      <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl" style="transition-delay:0.5s;">
+        <div>
+          <div class="stat-num" data-count="500">0</div>
+          <p class="text-silver text-xs mt-1" style="font-family:'JetBrains Mono',monospace;letter-spacing:0.04em;">LLM Responses Audited</p>
+        </div>
+        <div>
+          <div class="stat-num" data-count="12">0</div>
+          <p class="text-silver text-xs mt-1" style="font-family:'JetBrains Mono',monospace;letter-spacing:0.04em;">ETL Pipelines Built</p>
+        </div>
+        <div>
+          <div class="stat-num" data-count="98">0</div>
+          <p class="text-silver text-xs mt-1" style="font-family:'JetBrains Mono',monospace;letter-spacing:0.04em;">% Data Accuracy Rate</p>
+        </div>
+        <div>
+          <div class="stat-num" data-count="3">0</div>
+          <p class="text-silver text-xs mt-1" style="font-family:'JetBrains Mono',monospace;letter-spacing:0.04em;">Years Specialised</p>
+        </div>
       </div>
     </div>
+
+    <!-- Scroll cue -->
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-content opacity-40">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#4B5673;letter-spacing:0.12em;text-transform:uppercase;">Scroll</span>
+      <div style="width:1px;height:40px;background:linear-gradient(180deg,#4B5673,transparent);animation:scrollpulse 2s ease-in-out infinite;"></div>
+    </div>
   </section>
+  <!-- /#hero -->
 
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!--  ABOUT                                             -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <section id="about" class="py-28 px-6 relative overflow-hidden">
-    <div class="blob w-72 h-72" style="background:rgba(139,92,246,0.07); top:0; right:10%"></div>
 
-    <div class="max-w-6xl mx-auto">
-      <div class="reveal grid md:grid-cols-2 gap-16 items-center">
+  <div class="glow-divider z-content relative"></div>
+
+
+  <!-- ████████████████ ABOUT ████████████████ -->
+  <section id="about" class="z-content">
+    <div class="max-w-6xl mx-auto px-6">
+
+      <div class="grid md:grid-cols-2 gap-16 items-center">
 
         <!-- Left: text -->
         <div>
-          <span class="section-tag block mb-4">// about me</span>
-          <h2 class="text-4xl md:text-5xl font-black mb-6 leading-tight">
-            Data <span class="gradient-text">Storyteller.</span><br/>
-            Problem Solver.
+          <p class="eyebrow reveal mb-5">About Me</p>
+          <h2 class="reveal font-display text-white mb-6" style="font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;line-height:1.15;letter-spacing:-0.02em;transition-delay:0.1s;">
+            Where Rigorous Data Science<br/>Meets AI Alignment.
           </h2>
-          <p class="text-base leading-relaxed mb-5" style="color:#94A3B8">
-            I'm an aspiring Data Analyst with a passion for making sense of messy, 
-            complex datasets. I believe great analysis isn't just about numbers — 
-            it's about telling the story those numbers are trying to tell.
-          </p>
-          <p class="text-base leading-relaxed mb-8" style="color:#64748B">
-            From cleaning raw CSVs to deploying ETL pipelines on the cloud, 
-            I bridge the gap between raw data and actionable business decisions. 
-            Currently deepening my expertise in cloud platforms (AWS, Azure) and 
-            modern data stack tools like dbt and Docker.
-          </p>
+          <div class="reveal space-y-4 text-silver leading-relaxed" style="font-size:0.9375rem;transition-delay:0.2s;">
+            <p>
+              I operate at the critical interface between raw data and intelligent systems. My work spans the full
+              lifecycle: cleaning and structuring messy datasets, designing RLHF pipelines that teach models to
+              prefer accurate over plausible, and stress-testing language model outputs against adversarial edge cases.
+            </p>
+            <p>
+              With a background rooted in SQL-driven analytics and Python-based data engineering, I've expanded into
+              the specialist discipline of AI model evaluation—auditing hallucinations, curating multi-turn SFT
+              datasets, and building the error taxonomies that make model behaviour legible to researchers and engineers.
+            </p>
+            <p>
+              Every data artefact I produce is built to be reproducible, traceable, and high-fidelity. I don't ship
+              datasets—I ship truth.
+            </p>
+          </div>
 
-          <!-- Mini stats -->
-          <div class="grid grid-cols-3 gap-4">
-            <div class="glass rounded-xl p-4 text-center stat-card">
-              <div class="text-2xl font-black gradient-text">15+</div>
-              <div class="text-xs mt-1" style="color:#64748B">Projects Built</div>
+          <!-- Pillars -->
+          <div class="reveal mt-8 grid grid-cols-2 gap-3" style="transition-delay:0.3s;">
+            <div style="padding:14px;background:rgba(91,106,240,0.07);border:1px solid rgba(91,106,240,0.2);border-radius:10px;">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#5B6AF0;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">Primary Domain</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;color:#E2E8F0;font-size:0.9rem;">Data Analytics & Engineering</div>
             </div>
-            <div class="glass rounded-xl p-4 text-center stat-card">
-              <div class="text-2xl font-black gradient-text">8+</div>
-              <div class="text-xs mt-1" style="color:#64748B">Tools Mastered</div>
+            <div style="padding:14px;background:rgba(34,211,238,0.07);border:1px solid rgba(34,211,238,0.2);border-radius:10px;">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#22D3EE;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">Specialisation</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;color:#E2E8F0;font-size:0.9rem;">LLM Evaluation & RLHF</div>
             </div>
-            <div class="glass rounded-xl p-4 text-center stat-card">
-              <div class="text-2xl font-black gradient-text">∞</div>
-              <div class="text-xs mt-1" style="color:#64748B">Curiosity</div>
+            <div style="padding:14px;background:rgba(167,139,250,0.07);border:1px solid rgba(167,139,250,0.2);border-radius:10px;">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#A78BFA;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">QA Focus</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;color:#E2E8F0;font-size:0.9rem;">AI Hallucination Auditing</div>
+            </div>
+            <div style="padding:14px;background:rgba(30,42,64,0.6);border:1px solid #1E2A40;border-radius:10px;">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#4B5673;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">Approach</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;color:#E2E8F0;font-size:0.9rem;">Systematic & Reproducible</div>
             </div>
           </div>
         </div>
 
         <!-- Right: terminal card -->
-        <div class="reveal">
-          <div class="glass rounded-2xl overflow-hidden">
-            <!-- Terminal bar -->
-            <div class="flex items-center gap-2 px-4 py-3" style="background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.05)">
-              <div class="w-3 h-3 rounded-full bg-red-500 opacity-70"></div>
-              <div class="w-3 h-3 rounded-full bg-yellow-500 opacity-70"></div>
-              <div class="w-3 h-3 rounded-full bg-green-500 opacity-70"></div>
-              <span style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:#4B5563; margin-left:auto">analyst.py</span>
+        <div class="reveal" style="transition-delay:0.15s;">
+          <div style="background:rgba(14,20,32,0.9);border:1px solid #1E2A40;border-radius:16px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.5);">
+            <!-- Terminal chrome -->
+            <div style="padding:12px 16px;border-bottom:1px solid #1E2A40;display:flex;align-items:center;gap:8px;">
+              <span style="width:12px;height:12px;border-radius:50%;background:#FF5F57;"></span>
+              <span style="width:12px;height:12px;border-radius:50%;background:#FEBC2E;"></span>
+              <span style="width:12px;height:12px;border-radius:50%;background:#28C840;"></span>
+              <span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#4B5673;">profile.json</span>
             </div>
-            <!-- Code content -->
-            <div class="p-6" style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; line-height:1.9">
-              <div><span style="color:#8B5CF6">class</span> <span style="color:#60A5FA">DataAnalyst</span>:</div>
-              <div class="pl-4"><span style="color:#8B5CF6">def</span> <span style="color:#22D3EE">__init__</span>(self):</div>
-              <div class="pl-8"><span style="color:#94A3B8">self</span>.name = <span style="color:#86EFAC">"Timileyin Idowu"</span></div>
-              <div class="pl-8"><span style="color:#94A3B8">self</span>.role = <span style="color:#86EFAC">"Data Analyst"</span></div>
-              <div class="pl-8"><span style="color:#94A3B8">self</span>.focus = [</div>
-              <div class="pl-12"><span style="color:#86EFAC">"Data Storytelling"</span>,</div>
-              <div class="pl-12"><span style="color:#86EFAC">"ETL Pipelines"</span>,</div>
-              <div class="pl-12"><span style="color:#86EFAC">"Cloud Analytics"</span>,</div>
-              <div class="pl-8">]</div>
-              <div class="pl-8"><span style="color:#94A3B8">self</span>.open_to_work = <span style="color:#FB923C">True</span></div>
-              <div class="mt-2"></div>
-              <div class="pl-4"><span style="color:#8B5CF6">def</span> <span style="color:#22D3EE">get_value</span>(self):</div>
-              <div class="pl-8"><span style="color:#8B5CF6">return</span> <span style="color:#86EFAC">"Insights that drive action"</span></div>
-            </div>
+            <!-- JSON content -->
+            <pre style="padding:24px;font-family:'JetBrains Mono',monospace;font-size:0.78rem;line-height:1.7;overflow-x:auto;color:#8896B0;"><span style="color:#4B5673;">{</span>
+  <span style="color:#5B6AF0;">"name"</span>: <span style="color:#A78BFA;">"Timileyin"</span>,
+  <span style="color:#5B6AF0;">"role"</span>: <span style="color:#A78BFA;">"AI Data Specialist"</span>,
+  <span style="color:#5B6AF0;">"github"</span>: <span style="color:#22D3EE;">"@Timileyin014"</span>,
+  <span style="color:#5B6AF0;">"focus"</span>: [
+    <span style="color:#A78BFA;">"Data Analytics"</span>,
+    <span style="color:#A78BFA;">"LLM Fine-Tuning"</span>,
+    <span style="color:#A78BFA;">"RLHF Pipeline Design"</span>,
+    <span style="color:#A78BFA;">"Hallucination Auditing"</span>
+  ],
+  <span style="color:#5B6AF0;">"stack"</span>: [
+    <span style="color:#A78BFA;">"Python"</span>, <span style="color:#A78BFA;">"SQL"</span>, <span style="color:#A78BFA;">"Git"</span>, <span style="color:#A78BFA;">"Docker"</span>
+  ],
+  <span style="color:#5B6AF0;">"status"</span>: <span style="color:#28C840;">"available"</span>,
+  <span style="color:#5B6AF0;">"motto"</span>: <span style="color:#A78BFA;">"I don't ship datasets, I ship truth."</span>
+<span style="color:#4B5673;">}</span></pre>
           </div>
         </div>
 
       </div>
     </div>
   </section>
+  <!-- /#about -->
 
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!--  SKILLS                                            -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <section id="skills" class="py-28 px-6 relative overflow-hidden" style="background:rgba(13,19,33,0.5)">
-    <div class="blob w-80 h-80" style="background:rgba(34,211,238,0.05); bottom:-10%; left:5%"></div>
 
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-16 reveal">
-        <span class="section-tag block mb-4">// technical skills</span>
-        <h2 class="text-4xl md:text-5xl font-black">
-          My <span class="gradient-text">Toolbox</span>
+  <div class="glow-divider z-content relative"></div>
+
+
+  <!-- ████████████████ SKILLS / EXPERTISE MATRIX ████████████████ -->
+  <section id="skills" class="z-content">
+    <div class="max-w-6xl mx-auto px-6">
+
+      <div class="text-center mb-16">
+        <p class="eyebrow reveal justify-center mb-4">Expertise Matrix</p>
+        <h2 class="reveal font-display text-white" style="font-size:clamp(1.75rem,4vw,2.5rem);font-weight:700;letter-spacing:-0.02em;transition-delay:0.1s;">
+          Technical Capabilities
         </h2>
-        <p class="mt-4 max-w-xl mx-auto text-sm leading-relaxed" style="color:#64748B">
-          A curated stack of tools and technologies I use to extract, transform, and visualise data at every stage of the pipeline.
+        <p class="reveal text-silver mt-3 max-w-md mx-auto text-sm" style="transition-delay:0.2s;">
+          Hover any skill to explore. Each category maps to a core discipline.
         </p>
       </div>
 
-      <!-- Core Skills with proficiency bars -->
-      <div class="reveal mb-12">
-        <h3 class="text-xs mb-6" style="font-family:'JetBrains Mono',monospace; color:#60A5FA; letter-spacing:0.1em">CORE COMPETENCIES</h3>
-        <div class="grid md:grid-cols-2 gap-6">
-          <!-- Skill bar macro -->
-          <div class="glass rounded-xl p-5">
-            <div class="flex justify-between text-sm mb-2"><span style="color:#E2E8F0">SQL</span><span style="color:#60A5FA">90%</span></div>
-            <div class="w-full h-1.5 rounded-full" style="background:rgba(255,255,255,0.07)"><div class="skill-bar-fill h-1.5 rounded-full" style="width:0%" data-width="90%"></div></div>
+      <!-- Three columns -->
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <!-- Column 1: Data Analytics -->
+        <div class="glass-card p-7 reveal">
+          <div class="flex items-center gap-3 mb-6">
+            <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,rgba(91,106,240,0.2),rgba(91,106,240,0.05));border:1px solid rgba(91,106,240,0.3);display:flex;align-items:center;justify-content:center;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6AF0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div>
+              <h3 class="font-display font-600 text-white text-sm">Data Analytics</h3>
+              <p style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#5B6AF0;letter-spacing:0.06em;">CORE STACK</p>
+            </div>
           </div>
-          <div class="glass rounded-xl p-5">
-            <div class="flex justify-between text-sm mb-2"><span style="color:#E2E8F0">Python</span><span style="color:#60A5FA">82%</span></div>
-            <div class="w-full h-1.5 rounded-full" style="background:rgba(255,255,255,0.07)"><div class="skill-bar-fill h-1.5 rounded-full" style="width:0%" data-width="82%"></div></div>
-          </div>
-          <div class="glass rounded-xl p-5">
-            <div class="flex justify-between text-sm mb-2"><span style="color:#E2E8F0">Power BI</span><span style="color:#60A5FA">85%</span></div>
-            <div class="w-full h-1.5 rounded-full" style="background:rgba(255,255,255,0.07)"><div class="skill-bar-fill h-1.5 rounded-full" style="width:0%" data-width="85%"></div></div>
-          </div>
-          <div class="glass rounded-xl p-5">
-            <div class="flex justify-between text-sm mb-2"><span style="color:#E2E8F0">Excel / Power Query</span><span style="color:#60A5FA">88%</span></div>
-            <div class="w-full h-1.5 rounded-full" style="background:rgba(255,255,255,0.07)"><div class="skill-bar-fill h-1.5 rounded-full" style="width:0%" data-width="88%"></div></div>
+
+          <!-- Skill rows with bars -->
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="skill-badge" style="padding:5px 12px;"><span class="dot" style="background:#5B6AF0;"></span>SQL</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#5B6AF0;">95%</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" data-width="95"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="skill-badge" style="padding:5px 12px;"><span class="dot" style="background:#5B6AF0;"></span>Python (Pandas/NumPy)</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#5B6AF0;">92%</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" data-width="92"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="skill-badge" style="padding:5px 12px;"><span class="dot" style="background:#5B6AF0;"></span>Matplotlib / Viz</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#5B6AF0;">85%</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" data-width="85"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="skill-badge" style="padding:5px 12px;"><span class="dot" style="background:#5B6AF0;"></span>Advanced Excel</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#5B6AF0;">90%</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" data-width="90"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="skill-badge" style="padding:5px 12px;"><span class="dot" style="background:#5B6AF0;"></span>Data Cleaning & Preprocessing</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#5B6AF0;">97%</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" data-width="97"></div></div>
+            </div>
           </div>
         </div>
+        <!-- /col 1 -->
+
+        <!-- Column 2: AI Training -->
+        <div class="glass-card p-7 reveal" style="transition-delay:0.1s;">
+          <div class="flex items-center gap-3 mb-6">
+            <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,rgba(34,211,238,0.2),rgba(34,211,238,0.05));border:1px solid rgba(34,211,238,0.3);display:flex;align-items:center;justify-content:center;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+            </div>
+            <div>
+              <h3 class="font-display font-600 text-white text-sm">AI Training & Evaluation</h3>
+              <p style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#22D3EE;letter-spacing:0.06em;">ALIGNMENT WORK</p>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="skill-badge" style="padding:5px 12px;"><span class="dot" style="background:#22D3EE;"></span>Prompt Engineering</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#22D3EE;">96%</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" data-width="96" style="background:linear-gradient(90deg,#22D3EE,#A78BFA);"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="skill-badge" style="padding:5px 12px;"><span class="dot" style="background:#22D3EE;"></span>RLHF Pipeline Design</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#22D3EE;">88%</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" data-width="88" style="background:linear-gradient(90deg,#22D3EE,#A78BFA);"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="skill-badge" style="padding:5px 12px;"><span class="dot" style="background:#22D3EE;"></span>Model Response Evaluation</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#22D3EE;">94%</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" data-width="94" style="background:linear-gradient(90deg,#22D3EE,#A78BFA);"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="skill-badge" style="padding:5px 12px;"><span class="dot" style="background:#22D3EE;"></span>SFT Dataset Curation</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#22D3EE;">91%</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" data-width="91" style="background:linear-gradient(90deg,#22D3EE,#A78BFA);"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="skill-badge" style="padding:5px 12px;"><span class="dot" style="background:#22D3EE;"></span>LLM Fine-Tuning Oversight</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#22D3EE;">86%</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" data-width="86" style="background:linear-gradient(90deg,#22D3EE,#A78BFA);"></div></div>
+            </div>
+          </div>
+        </div>
+        <!-- /col 2 -->
+
+        <!-- Column 3: QA & Tooling -->
+        <div class="glass-card p-7 reveal" style="transition-delay:0.2s;">
+          <div class="flex items-center gap-3 mb-6">
+            <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,rgba(167,139,250,0.2),rgba(167,139,250,0.05));border:1px solid rgba(167,139,250,0.3);display:flex;align-items:center;justify-content:center;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-display font-600 text-white text-sm">QA & Tooling</h3>
+              <p style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#A78BFA;letter-spacing:0.06em;">QUALITY LAYER</p>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="skill-badge" style="padding:5px 12px;"><span class="dot" style="background:#A78BFA;"></span>AI Hallucination Auditing</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#A78BFA;">98%</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" data-width="98" style="background:linear-gradient(90deg,#A78BFA,#5B6AF0);"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="skill-badge" style="padding:5px 12px;"><span class="dot" style="background:#A78BFA;"></span>Edge Case Analysis</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#A78BFA;">93%</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" data-width="93" style="background:linear-gradient(90deg,#A78BFA,#5B6AF0);"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="skill-badge" style="padding:5px 12px;"><span class="dot" style="background:#A78BFA;"></span>Error Taxonomy Mapping</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#A78BFA;">90%</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" data-width="90" style="background:linear-gradient(90deg,#A78BFA,#5B6AF0);"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="skill-badge" style="padding:5px 12px;"><span class="dot" style="background:#A78BFA;"></span>Git & GitHub</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#A78BFA;">92%</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" data-width="92" style="background:linear-gradient(90deg,#A78BFA,#5B6AF0);"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="skill-badge" style="padding:5px 12px;"><span class="dot" style="background:#A78BFA;"></span>Docker / REST APIs</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#A78BFA;">82%</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" data-width="82" style="background:linear-gradient(90deg,#A78BFA,#5B6AF0);"></div></div>
+            </div>
+          </div>
+        </div>
+        <!-- /col 3 -->
+
       </div>
 
-      <!-- Skills grid (pills) -->
-      <div class="reveal">
-        <h3 class="text-xs mb-6" style="font-family:'JetBrains Mono',monospace; color:#8B5CF6; letter-spacing:0.1em">TOOLS & TECHNOLOGIES</h3>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3" id="skills-grid">
-          <!-- Rendered by JS -->
-        </div>
+      <!-- Badge cloud -->
+      <div class="reveal mt-12 flex flex-wrap gap-2 justify-center" style="transition-delay:0.3s;" aria-label="All skills">
+        <span class="skill-badge"><span class="dot" style="background:#5B6AF0;"></span>SQL</span>
+        <span class="skill-badge"><span class="dot" style="background:#5B6AF0;"></span>Python</span>
+        <span class="skill-badge"><span class="dot" style="background:#5B6AF0;"></span>Pandas</span>
+        <span class="skill-badge"><span class="dot" style="background:#5B6AF0;"></span>NumPy</span>
+        <span class="skill-badge"><span class="dot" style="background:#5B6AF0;"></span>Matplotlib</span>
+        <span class="skill-badge"><span class="dot" style="background:#22D3EE;"></span>RLHF</span>
+        <span class="skill-badge"><span class="dot" style="background:#22D3EE;"></span>Prompt Engineering</span>
+        <span class="skill-badge"><span class="dot" style="background:#22D3EE;"></span>SFT Curation</span>
+        <span class="skill-badge"><span class="dot" style="background:#22D3EE;"></span>LLM Evaluation</span>
+        <span class="skill-badge"><span class="dot" style="background:#A78BFA;"></span>QA Testing</span>
+        <span class="skill-badge"><span class="dot" style="background:#A78BFA;"></span>Hallucination Detection</span>
+        <span class="skill-badge"><span class="dot" style="background:#A78BFA;"></span>Edge Case Analysis</span>
+        <span class="skill-badge"><span class="dot" style="background:#A78BFA;"></span>Git & GitHub</span>
+        <span class="skill-badge"><span class="dot" style="background:#A78BFA;"></span>Docker</span>
+        <span class="skill-badge"><span class="dot" style="background:#A78BFA;"></span>REST APIs</span>
+        <span class="skill-badge"><span class="dot" style="background:#A78BFA;"></span>Data Validation</span>
       </div>
 
-      <!-- Cloud -->
-      <div class="reveal mt-8">
-        <h3 class="text-xs mb-6" style="font-family:'JetBrains Mono',monospace; color:#22D3EE; letter-spacing:0.1em">CLOUD & DATA OPS</h3>
-        <div class="flex flex-wrap gap-3" id="cloud-grid">
-          <!-- Rendered by JS -->
-        </div>
-      </div>
     </div>
   </section>
+  <!-- /#skills -->
 
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!--  PROJECTS                                          -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <section id="projects" class="py-28 px-6 relative overflow-hidden">
-    <div class="blob w-96 h-96" style="background:rgba(59,130,246,0.06); top:10%; right:-10%"></div>
 
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-16 reveal">
-        <span class="section-tag block mb-4">// projects</span>
-        <h2 class="text-4xl md:text-5xl font-black">
-          Work That <span class="gradient-text">Speaks</span>
+  <div class="glow-divider z-content relative"></div>
+
+
+  <!-- ████████████████ PROJECTS / CASE STUDIES ████████████████ -->
+  <section id="projects" class="z-content">
+    <div class="max-w-6xl mx-auto px-6">
+
+      <div class="text-center mb-16">
+        <p class="eyebrow reveal justify-center mb-4">Case Studies</p>
+        <h2 class="reveal font-display text-white" style="font-size:clamp(1.75rem,4vw,2.5rem);font-weight:700;letter-spacing:-0.02em;transition-delay:0.1s;">
+          Core Projects & Research
         </h2>
-        <p class="mt-4 max-w-xl mx-auto text-sm leading-relaxed" style="color:#64748B">
-          Real-world data projects spanning analytics, automation, and cloud pipelines.
-          Fetched live from GitHub where possible.
+        <p class="reveal text-silver mt-3 text-sm max-w-md mx-auto" style="transition-delay:0.2s;">
+          Each case study is a rigorous, documented engagement—not demos, but production-grade data work.
         </p>
       </div>
 
-      <!-- Loading state -->
-      <div id="projects-loader" class="flex items-center justify-center gap-3 py-12 text-sm" style="color:#64748B; font-family:'JetBrains Mono',monospace">
-        <div class="w-4 h-4 border-2 rounded-full animate-spin" style="border-color:#3B82F6 transparent transparent transparent"></div>
-        Fetching repositories...
+      <!-- GitHub repo card strip (dynamically populated) -->
+      <div id="github-repos" class="mb-12">
+        <!-- Populated by JS -->
       </div>
 
-      <!-- Projects grid -->
-      <div id="projects-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 hidden"></div>
+      <!-- Static case study cards -->
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <!-- Case Study 1 -->
+        <div class="glass-card p-7 reveal flex flex-col" style="min-height:340px;">
+          <div class="flex items-start justify-between mb-4">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,85,87,0.1);border:1px solid rgba(255,85,87,0.25);display:flex;align-items:center;justify-content:center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF5557" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="flex gap-2">
+              <span class="tag" style="background:rgba(255,85,87,0.1);color:#FF5557;border:1px solid rgba(255,85,87,0.25);">QA</span>
+              <span class="tag" style="background:rgba(91,106,240,0.1);color:#818CF8;border:1px solid rgba(91,106,240,0.25);">LLM</span>
+            </div>
+          </div>
+          <h3 class="font-display font-600 text-white text-base mb-3 leading-snug">
+            LLM Response Auditing &amp; Error Taxonomy
+          </h3>
+          <p class="text-silver text-sm leading-relaxed flex-1">
+            Systematic auditing framework for identifying, classifying, and documenting hallucination patterns across
+            500+ LLM-generated responses. Produced a structured error taxonomy covering factual, logical, and
+            citation-based failure modes with reproducibility scores.
+          </p>
+          <div class="mt-6 pt-5 border-t border-border flex flex-wrap gap-2">
+            <span class="skill-badge" style="font-size:0.68rem;padding:4px 10px;"><span class="dot" style="background:#FF5557;"></span>Python</span>
+            <span class="skill-badge" style="font-size:0.68rem;padding:4px 10px;"><span class="dot" style="background:#FF5557;"></span>Pandas</span>
+            <span class="skill-badge" style="font-size:0.68rem;padding:4px 10px;"><span class="dot" style="background:#FF5557;"></span>NLP Evaluation</span>
+          </div>
+        </div>
+
+        <!-- Case Study 2 -->
+        <div class="glass-card p-7 reveal flex flex-col" style="min-height:340px;transition-delay:0.1s;">
+          <div class="flex items-start justify-between mb-4">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.25);display:flex;align-items:center;justify-content:center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
+            </div>
+            <div class="flex gap-2">
+              <span class="tag" style="background:rgba(34,211,238,0.1);color:#22D3EE;border:1px solid rgba(34,211,238,0.25);">Dataset</span>
+              <span class="tag" style="background:rgba(167,139,250,0.1);color:#A78BFA;border:1px solid rgba(167,139,250,0.25);">RLHF</span>
+            </div>
+          </div>
+          <h3 class="font-display font-600 text-white text-base mb-3 leading-snug">
+            High-Context SFT Dataset Curation for Multi-Turn AI Training
+          </h3>
+          <p class="text-silver text-sm leading-relaxed flex-1">
+            End-to-end curation of a multi-turn conversational dataset for supervised fine-tuning. Involved context
+            coherence scoring, preference pair generation for RLHF, deduplication, and format normalisation to
+            meet training-ready specifications across 10,000+ samples.
+          </p>
+          <div class="mt-6 pt-5 border-t border-border flex flex-wrap gap-2">
+            <span class="skill-badge" style="font-size:0.68rem;padding:4px 10px;"><span class="dot" style="background:#22D3EE;"></span>SFT Curation</span>
+            <span class="skill-badge" style="font-size:0.68rem;padding:4px 10px;"><span class="dot" style="background:#22D3EE;"></span>RLHF</span>
+            <span class="skill-badge" style="font-size:0.68rem;padding:4px 10px;"><span class="dot" style="background:#22D3EE;"></span>Data Validation</span>
+          </div>
+        </div>
+
+        <!-- Case Study 3 -->
+        <div class="glass-card p-7 reveal flex flex-col" style="min-height:340px;transition-delay:0.2s;">
+          <div class="flex items-start justify-between mb-4">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(91,106,240,0.1);border:1px solid rgba(91,106,240,0.25);display:flex;align-items:center;justify-content:center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#818CF8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <div class="flex gap-2">
+              <span class="tag" style="background:rgba(91,106,240,0.1);color:#818CF8;border:1px solid rgba(91,106,240,0.25);">ETL</span>
+              <span class="tag" style="background:rgba(34,211,238,0.1);color:#22D3EE;border:1px solid rgba(34,211,238,0.25);">Python/SQL</span>
+            </div>
+          </div>
+          <h3 class="font-display font-600 text-white text-base mb-3 leading-snug">
+            Automated ETL Pipeline &amp; Data Validation Utility
+          </h3>
+          <p class="text-silver text-sm leading-relaxed flex-1">
+            Built a modular Python + SQL ETL pipeline automating ingestion, transformation, and validation of
+            multi-source datasets. Included schema enforcement, outlier flagging, duplicate resolution, and
+            a reporting layer exposing data quality metrics via REST API endpoints.
+          </p>
+          <div class="mt-6 pt-5 border-t border-border flex flex-wrap gap-2">
+            <span class="skill-badge" style="font-size:0.68rem;padding:4px 10px;"><span class="dot" style="background:#818CF8;"></span>Python</span>
+            <span class="skill-badge" style="font-size:0.68rem;padding:4px 10px;"><span class="dot" style="background:#818CF8;"></span>SQL</span>
+            <span class="skill-badge" style="font-size:0.68rem;padding:4px 10px;"><span class="dot" style="background:#818CF8;"></span>REST APIs</span>
+            <span class="skill-badge" style="font-size:0.68rem;padding:4px 10px;"><span class="dot" style="background:#818CF8;"></span>Docker</span>
+          </div>
+        </div>
+
+      </div>
 
       <!-- GitHub CTA -->
-      <div class="text-center mt-12 reveal">
-        <a href="https://github.com/Timileyin014" target="_blank" rel="noopener"
-           class="btn-ghost inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium" style="color:#E2E8F0">
-          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.951.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-          See All Repositories
+      <div class="reveal text-center mt-10" style="transition-delay:0.3s;">
+        <a href="https://github.com/Timileyin014" target="_blank" rel="noopener" class="btn-ghost">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          View All Repositories on GitHub
         </a>
+      </div>
+
+    </div>
+  </section>
+  <!-- /#projects -->
+
+
+  <div class="glow-divider z-content relative"></div>
+
+
+  <!-- ████████████████ EXPERIENCE TIMELINE ████████████████ -->
+  <section id="timeline" class="z-content">
+    <div class="max-w-6xl mx-auto px-6">
+
+      <div class="grid md:grid-cols-2 gap-16 items-start">
+        <!-- Left: sticky label -->
+        <div class="md:sticky" style="top:120px;">
+          <p class="eyebrow reveal mb-5">Experience</p>
+          <h2 class="reveal font-display text-white mb-6" style="font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;letter-spacing:-0.02em;line-height:1.15;transition-delay:0.1s;">
+            A Timeline of<br/>Deliberate Growth.
+          </h2>
+          <p class="reveal text-silver text-sm leading-relaxed" style="transition-delay:0.2s;">
+            Each milestone represents a deliberate expansion—from foundational data analysis toward
+            the specialised discipline of AI alignment and quality engineering.
+          </p>
+
+          <!-- Mini metrics -->
+          <div class="reveal mt-8 flex gap-6" style="transition-delay:0.3s;">
+            <div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-size:1.75rem;font-weight:700;background:linear-gradient(135deg,#818CF8,#22D3EE);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">3+</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#4B5673;letter-spacing:0.06em;text-transform:uppercase;">Years Active</div>
+            </div>
+            <div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-size:1.75rem;font-weight:700;background:linear-gradient(135deg,#818CF8,#22D3EE);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">4</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#4B5673;letter-spacing:0.06em;text-transform:uppercase;">Domains Covered</div>
+            </div>
+            <div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-size:1.75rem;font-weight:700;background:linear-gradient(135deg,#818CF8,#22D3EE);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">15+</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#4B5673;letter-spacing:0.06em;text-transform:uppercase;">Skills Mastered</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: timeline -->
+        <div class="relative pl-12">
+          <!-- Vertical line -->
+          <div class="timeline-line" aria-hidden="true"></div>
+
+          <!-- Item 1 -->
+          <div class="reveal relative mb-10 pb-10 border-b border-border" style="transition-delay:0s;">
+            <div class="timeline-dot" style="top:4px;" aria-hidden="true"></div>
+            <div class="glass-card p-6">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#22D3EE;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">2024 – Present</div>
+              <h3 class="font-display font-600 text-white text-sm mb-1">AI Data Specialist & QA Analyst</h3>
+              <p style="font-size:0.78rem;color:#4B5673;font-family:'JetBrains Mono',monospace;margin-bottom:12px;">AI Content Evaluation Platforms · Remote</p>
+              <p class="text-silver text-sm leading-relaxed">
+                Lead evaluator for LLM response quality—designing rubrics, auditing hallucinations, and curating
+                preference datasets for RLHF. Delivered structured SFT corpora and implemented QA automation
+                scripts reducing review cycle time by ~40%.
+              </p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <span class="tag" style="background:rgba(34,211,238,0.08);color:#22D3EE;border:1px solid rgba(34,211,238,0.2);">RLHF</span>
+                <span class="tag" style="background:rgba(34,211,238,0.08);color:#22D3EE;border:1px solid rgba(34,211,238,0.2);">LLM QA</span>
+                <span class="tag" style="background:rgba(34,211,238,0.08);color:#22D3EE;border:1px solid rgba(34,211,238,0.2);">SFT Curation</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="reveal relative mb-10 pb-10 border-b border-border" style="transition-delay:0.1s;">
+            <div class="timeline-dot" style="top:4px;" aria-hidden="true"></div>
+            <div class="glass-card p-6">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#5B6AF0;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">2023 – 2024</div>
+              <h3 class="font-display font-600 text-white text-sm mb-1">Data Analyst & Prompt Engineer</h3>
+              <p style="font-size:0.78rem;color:#4B5673;font-family:'JetBrains Mono',monospace;margin-bottom:12px;">Freelance & Contract · Various</p>
+              <p class="text-silver text-sm leading-relaxed">
+                Developed prompt evaluation frameworks for enterprise clients, designed SQL-driven reporting
+                pipelines, and delivered Python automation scripts for data cleaning workflows. Produced
+                annotated datasets and model evaluation benchmarks.
+              </p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <span class="tag" style="background:rgba(91,106,240,0.08);color:#818CF8;border:1px solid rgba(91,106,240,0.2);">Python</span>
+                <span class="tag" style="background:rgba(91,106,240,0.08);color:#818CF8;border:1px solid rgba(91,106,240,0.2);">SQL</span>
+                <span class="tag" style="background:rgba(91,106,240,0.08);color:#818CF8;border:1px solid rgba(91,106,240,0.2);">Prompt Engineering</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="reveal relative mb-10 pb-10 border-b border-border" style="transition-delay:0.2s;">
+            <div class="timeline-dot" style="top:4px;" aria-hidden="true"></div>
+            <div class="glass-card p-6">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#A78BFA;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">2022 – 2023</div>
+              <h3 class="font-display font-600 text-white text-sm mb-1">Junior Data Analyst</h3>
+              <p style="font-size:0.78rem;color:#4B5673;font-family:'JetBrains Mono',monospace;margin-bottom:12px;">Data-Driven Org · Entry Level</p>
+              <p class="text-silver text-sm leading-relaxed">
+                Core data analytics work: SQL query optimisation, Excel-based dashboards, data cleaning for
+                business intelligence pipelines, and report generation. Developed Python scripts for ETL
+                automation and first exposure to ML dataset preparation.
+              </p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <span class="tag" style="background:rgba(167,139,250,0.08);color:#A78BFA;border:1px solid rgba(167,139,250,0.2);">SQL</span>
+                <span class="tag" style="background:rgba(167,139,250,0.08);color:#A78BFA;border:1px solid rgba(167,139,250,0.2);">Excel</span>
+                <span class="tag" style="background:rgba(167,139,250,0.08);color:#A78BFA;border:1px solid rgba(167,139,250,0.2);">ETL</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="reveal relative" style="transition-delay:0.3s;">
+            <div class="timeline-dot" style="top:4px;" aria-hidden="true"></div>
+            <div class="glass-card p-6">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:#4B5673;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">2021 – 2022</div>
+              <h3 class="font-display font-600 text-white text-sm mb-1">Self-Directed Study & Foundation</h3>
+              <p style="font-size:0.78rem;color:#4B5673;font-family:'JetBrains Mono',monospace;margin-bottom:12px;">Independent Learning</p>
+              <p class="text-silver text-sm leading-relaxed">
+                Intensive self-study in Python, SQL, and data science fundamentals. Built initial portfolio
+                projects involving data wrangling, statistical analysis, and visualisation. First experiments
+                with NLP preprocessing and machine learning datasets.
+              </p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <span class="tag" style="background:rgba(75,86,115,0.2);color:#8896B0;border:1px solid #1E2A40;">Python</span>
+                <span class="tag" style="background:rgba(75,86,115,0.2);color:#8896B0;border:1px solid #1E2A40;">SQL</span>
+                <span class="tag" style="background:rgba(75,86,115,0.2);color:#8896B0;border:1px solid #1E2A40;">Foundations</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /timeline -->
+
       </div>
     </div>
   </section>
+  <!-- /#timeline -->
 
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!--  JOURNEY / TIMELINE                                -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <section id="journey" class="py-28 px-6 relative overflow-hidden" style="background:rgba(13,19,33,0.5)">
-    <div class="blob w-72 h-72" style="background:rgba(139,92,246,0.07); top:20%; right:-5%"></div>
 
-    <div class="max-w-3xl mx-auto">
-      <div class="text-center mb-16 reveal">
-        <span class="section-tag block mb-4">// learning journey</span>
-        <h2 class="text-4xl md:text-5xl font-black">
-          The <span class="gradient-text">Path</span> So Far
+  <div class="glow-divider z-content relative"></div>
+
+
+  <!-- ████████████████ CONTACT ████████████████ -->
+  <section id="contact" class="z-content">
+    <div class="max-w-6xl mx-auto px-6">
+
+      <div class="max-w-2xl mx-auto text-center mb-14">
+        <p class="eyebrow reveal justify-center mb-4">Contact</p>
+        <h2 class="reveal font-display text-white mb-4" style="font-size:clamp(1.75rem,4vw,2.5rem);font-weight:700;letter-spacing:-0.02em;transition-delay:0.1s;">
+          Let's Build Something Precise.
         </h2>
+        <p class="reveal text-silver text-sm leading-relaxed" style="transition-delay:0.2s;">
+          Open to AI data projects, LLM evaluation contracts, and QA consulting engagements.
+          I respond within 24 hours.
+        </p>
       </div>
 
-      <!-- Timeline -->
-      <div class="relative pl-8">
-        <!-- vertical line -->
-        <div class="absolute left-0 top-2 bottom-0 w-px timeline-line"></div>
+      <div class="grid md:grid-cols-2 gap-10 items-start max-w-4xl mx-auto">
 
-        <!-- Events -->
-        <div id="timeline-events">
-          <!-- Rendered by JS -->
+        <!-- Left: Contact channels -->
+        <div class="reveal space-y-4" style="transition-delay:0.1s;">
+          <a href="mailto:your.email@example.com"
+             class="glass-card p-5 flex items-center gap-4 group" style="text-decoration:none;">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(91,106,240,0.1);border:1px solid rgba(91,106,240,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.2s;" class="group-hover:bg-indigo/20">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#818CF8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#4B5673;letter-spacing:0.1em;text-transform:uppercase;">Email</div>
+              <div style="font-size:0.875rem;color:#E2E8F0;margin-top:2px;">your.email@example.com</div>
+            </div>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B5673" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:auto;" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <a href="https://www.linkedin.com/in/your-linkedin" target="_blank" rel="noopener"
+             class="glass-card p-5 flex items-center gap-4 group" style="text-decoration:none;">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#22D3EE" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </div>
+            <div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#4B5673;letter-spacing:0.1em;text-transform:uppercase;">LinkedIn</div>
+              <div style="font-size:0.875rem;color:#E2E8F0;margin-top:2px;">linkedin.com/in/timileyin</div>
+            </div>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B5673" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:auto;" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <a href="https://github.com/Timileyin014" target="_blank" rel="noopener"
+             class="glass-card p-5 flex items-center gap-4 group" style="text-decoration:none;">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#A78BFA" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            </div>
+            <div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#4B5673;letter-spacing:0.1em;text-transform:uppercase;">GitHub</div>
+              <div style="font-size:0.875rem;color:#E2E8F0;margin-top:2px;">github.com/Timileyin014</div>
+            </div>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B5673" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:auto;" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
         </div>
+
+        <!-- Right: Message form -->
+        <div class="reveal glass-card p-7" style="transition-delay:0.2s;">
+          <h3 class="font-display font-600 text-white text-base mb-6">Send a Message</h3>
+          <div class="space-y-4">
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#4B5673;letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:8px;" for="msg-name">Name</label>
+                <input id="msg-name" type="text" class="field" placeholder="Your name" autocomplete="name" />
+              </div>
+              <div>
+                <label style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#4B5673;letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:8px;" for="msg-email">Email</label>
+                <input id="msg-email" type="email" class="field" placeholder="your@email.com" autocomplete="email" />
+              </div>
+            </div>
+            <div>
+              <label style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#4B5673;letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:8px;" for="msg-subject">Subject</label>
+              <input id="msg-subject" type="text" class="field" placeholder="Project brief / Collaboration" />
+            </div>
+            <div>
+              <label style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#4B5673;letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:8px;" for="msg-body">Message</label>
+              <textarea id="msg-body" class="field" rows="4" placeholder="Tell me about the project…"></textarea>
+            </div>
+            <button onclick="handleFormSubmit()" class="btn-primary w-full justify-center" style="margin-top:4px;">
+              Send Message
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+            <p id="form-feedback" class="text-center text-xs" style="font-family:'JetBrains Mono',monospace;min-height:1rem;"></p>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
+  <!-- /#contact -->
 
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!--  CONTACT                                           -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <section id="contact" class="py-28 px-6 relative overflow-hidden">
-    <div class="blob w-96 h-96" style="background:rgba(34,211,238,0.05); bottom:-5%; left:-10%"></div>
-    <div class="blob w-72 h-72" style="background:rgba(59,130,246,0.07); top:10%; right:-5%"></div>
 
-    <div class="max-w-2xl mx-auto text-center reveal">
-      <span class="section-tag block mb-4">// contact</span>
-      <h2 class="text-4xl md:text-5xl font-black mb-4">
-        Let's <span class="gradient-text">Connect</span>
-      </h2>
-      <p class="text-sm leading-relaxed mb-12" style="color:#64748B">
-        Open to internships, freelance projects, and full-time data analyst roles.
-        Drop a message — I reply within 24 hours.
-      </p>
-
-      <!-- Contact card -->
-      <div class="glass rounded-2xl p-8 mb-10">
-        <div class="space-y-4">
-          <input type="text" placeholder="Your name" class="form-input w-full px-4 py-3.5 rounded-xl text-sm" />
-          <input type="email" placeholder="your@email.com" class="form-input w-full px-4 py-3.5 rounded-xl text-sm" />
-          <textarea placeholder="Tell me about the opportunity or project..." rows="4" class="form-input w-full px-4 py-3.5 rounded-xl text-sm resize-none"></textarea>
-          <button onclick="handleContact(this)" class="btn-primary w-full py-3.5 rounded-xl text-sm font-semibold text-white">
-            Send Message
-          </button>
-        </div>
+  <!-- ████████████████ FOOTER ████████████████ -->
+  <footer class="z-content relative border-t border-border mt-8">
+    <div class="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#4B5673;">
+        © 2025 Timileyin · AI Data Specialist & QA Analyst
       </div>
-
-      <!-- Social links -->
-      <div class="flex items-center justify-center gap-6 flex-wrap">
-        <a href="https://github.com/Timileyin014" target="_blank" rel="noopener"
-           class="flex items-center gap-2 text-sm group" style="color:#64748B; transition:color .2s"
-           onmouseover="this.style.color='#E2E8F0'" onmouseout="this.style.color='#64748B'">
-          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.951.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.745 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-          GitHub
-        </a>
-        <span style="color:#1E2D40">·</span>
-        <a href="mailto:timileyin014@gmail.com"
-           class="flex items-center gap-2 text-sm" style="color:#64748B; transition:color .2s"
-           onmouseover="this.style.color='#E2E8F0'" onmouseout="this.style.color='#64748B'">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          Email
-        </a>
-        <span style="color:#1E2D40">·</span>
-        <a href="https://linkedin.com" target="_blank" rel="noopener"
-           class="flex items-center gap-2 text-sm" style="color:#64748B; transition:color .2s"
-           onmouseover="this.style.color='#E2E8F0'" onmouseout="this.style.color='#64748B'">
-          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-          LinkedIn
-        </a>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#4B5673;" class="flex items-center gap-2">
+        <span style="width:6px;height:6px;background:#22D3EE;border-radius:50%;box-shadow:0 0 6px #22D3EE;" aria-hidden="true"></span>
+        Available for new projects
       </div>
     </div>
-  </section>
-
-  <!-- ─── Footer ───────────────────────────────────────── -->
-  <footer class="py-8 px-6 text-center" style="border-top:1px solid rgba(255,255,255,0.04)">
-    <p style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:#374151">
-      © 2025 Timileyin Idowu · Built with data-driven precision
-    </p>
   </footer>
 
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!--  JAVASCRIPT                                        -->
-  <!-- ═══════════════════════════════════════════════════ -->
+
+  <!-- ████████████████ JAVASCRIPT ████████████████ -->
   <script>
+    // ═══════════════════════════════════════════════════════════════════
+    //  1. NAVBAR — scroll detection → frosted glass
+    // ═══════════════════════════════════════════════════════════════════
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
 
-  /* ─── Loader ──────────────────────────────────────── */
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      const l = document.getElementById('loader');
-      l.style.opacity = '0';
-      l.style.pointerEvents = 'none';
-      setTimeout(() => l.remove(), 500);
-    }, 2000);
-  });
-
-  /* ─── Scroll Progress ─────────────────────────────── */
-  window.addEventListener('scroll', () => {
-    const d = document.documentElement;
-    const pct = (d.scrollTop / (d.scrollHeight - d.clientHeight)) * 100;
-    document.getElementById('progress-bar').style.width = pct + '%';
-  });
-
-  /* ─── Mobile Nav ──────────────────────────────────── */
-  document.getElementById('hamburger').addEventListener('click', () => {
-    const m = document.getElementById('mobile-menu');
-    const o = document.getElementById('ham-open');
-    const c = document.getElementById('ham-close');
-    const isOpen = m.classList.contains('open');
-    m.classList.toggle('open', !isOpen);
-    o.classList.toggle('hidden', !isOpen);
-    c.classList.toggle('hidden', isOpen);
-  });
-  document.querySelectorAll('#mobile-menu a').forEach(a =>
-    a.addEventListener('click', () => {
-      document.getElementById('mobile-menu').classList.remove('open');
-      document.getElementById('ham-open').classList.remove('hidden');
-      document.getElementById('ham-close').classList.add('hidden');
-    })
-  );
-
-  /* ─── Typing Effect ───────────────────────────────── */
-  const phrases = [
-    'clear insights.',
-    'business decisions.',
-    'compelling stories.',
-    'ETL pipelines.',
-    'Power BI dashboards.',
-    'actionable intelligence.',
-  ];
-  let pi = 0, ci = 0, del = false;
-  const typedEl = document.getElementById('typed');
-  function type() {
-    const cur = phrases[pi];
-    typedEl.textContent = del ? cur.slice(0, ci--) : cur.slice(0, ci++);
-    if (!del && ci > cur.length) { del = true; setTimeout(type, 1400); return; }
-    if (del && ci < 0)           { del = false; pi = (pi + 1) % phrases.length; }
-    setTimeout(type, del ? 45 : 80);
-  }
-  setTimeout(type, 1200);
-
-  /* ─── Skills Data ─────────────────────────────────── */
-  const tools = [
-    { name: 'Pandas',          icon: '🐼' },
-    { name: 'NumPy',           icon: '🔢' },
-    { name: 'Matplotlib',      icon: '📊' },
-    { name: 'Seaborn',         icon: '🎨' },
-    { name: 'Git & GitHub',    icon: '🌿' },
-    { name: 'APIs',            icon: '🔌' },
-    { name: 'Automation',      icon: '⚙️' },
-    { name: 'Data Cleaning',   icon: '🧹' },
-    { name: 'Visualization',   icon: '📈' },
-    { name: 'ETL Pipelines',   icon: '🔄' },
-    { name: 'Data Warehousing',icon: '🏛️' },
-    { name: 'dbt',             icon: '🏗️' },
-    { name: 'Docker',          icon: '🐳' },
-  ];
-  const cloud = [
-    { name: 'AWS',   color: '#F59E0B' },
-    { name: 'Azure', color: '#0EA5E9' },
-    { name: 'dbt',   color: '#FF694B' },
-    { name: 'Docker',color: '#22D3EE' },
-  ];
-
-  const sg = document.getElementById('skills-grid');
-  tools.forEach(t => {
-    sg.innerHTML += `
-      <div class="skill-pill rounded-xl px-4 py-4 flex flex-col items-center gap-2 text-center cursor-default">
-        <span class="text-2xl">${t.icon}</span>
-        <span class="text-xs font-medium" style="color:#94A3B8">${t.name}</span>
-      </div>`;
-  });
-
-  const cg = document.getElementById('cloud-grid');
-  cloud.forEach(c => {
-    cg.innerHTML += `
-      <div class="skill-pill rounded-xl px-5 py-3 flex items-center gap-2 cursor-default">
-        <span class="w-2 h-2 rounded-full" style="background:${c.color}"></span>
-        <span class="text-sm font-medium" style="color:#E2E8F0">${c.name}</span>
-      </div>`;
-  });
-
-  /* ─── Projects ────────────────────────────────────── */
-  const fallbackProjects = [
-    {
-      name: 'Sales-Analytics-Pipeline',
-      description: 'End-to-end ETL pipeline ingesting sales data from CSV, transforming with Pandas, loading into a PostgreSQL warehouse, and visualising in Power BI.',
-      topics: ['Python', 'SQL', 'ETL', 'Pandas', 'Power BI'],
-      html_url: 'https://github.com/Timileyin014',
-      language: 'Python',
-      stargazers_count: 12,
-    },
-    {
-      name: 'Customer-Churn-Prediction',
-      description: 'Exploratory data analysis and predictive modelling pipeline for telecom customer churn. Includes feature engineering, EDA, and visual reporting.',
-      topics: ['Python', 'Pandas', 'Seaborn', 'Matplotlib', 'EDA'],
-      html_url: 'https://github.com/Timileyin014',
-      language: 'Python',
-      stargazers_count: 9,
-    },
-    {
-      name: 'COVID-Data-Warehouse',
-      description: 'Data warehouse design project with dimensional modelling (star schema) for COVID-19 global dataset, deployed on AWS RDS with scheduled ETL jobs.',
-      topics: ['SQL', 'AWS', 'Data Warehousing', 'ETL', 'Docker'],
-      html_url: 'https://github.com/Timileyin014',
-      language: 'SQL',
-      stargazers_count: 7,
-    },
-    {
-      name: 'Power-BI-Dashboard-Suite',
-      description: 'Collection of interactive Power BI dashboards covering HR analytics, finance KPIs, and operational metrics — built with DAX and Power Query.',
-      topics: ['Power BI', 'DAX', 'Excel', 'Data Visualization'],
-      html_url: 'https://github.com/Timileyin014',
-      language: 'DAX',
-      stargazers_count: 15,
-    },
-    {
-      name: 'dbt-Azure-Data-Pipeline',
-      description: 'Modern data stack implementation using dbt for transformation, Azure Data Factory for orchestration, and Synapse Analytics as the warehouse layer.',
-      topics: ['dbt', 'Azure', 'SQL', 'Data Engineering'],
-      html_url: 'https://github.com/Timileyin014',
-      language: 'SQL',
-      stargazers_count: 5,
-    },
-    {
-      name: 'Automation-Scripts-Hub',
-      description: 'Python automation scripts for data ingestion from REST APIs, automated Excel report generation, and scheduled email delivery of analytics summaries.',
-      topics: ['Python', 'APIs', 'Automation', 'Excel', 'Git'],
-      html_url: 'https://github.com/Timileyin014',
-      language: 'Python',
-      stargazers_count: 11,
-    },
-  ];
-
-  const langColors = {
-    Python: '#3B82F6', SQL: '#8B5CF6', DAX: '#22D3EE',
-    JavaScript: '#F59E0B', default: '#6B7280'
-  };
-
-  function renderProjects(repos) {
-    const grid = document.getElementById('projects-grid');
-    const loader = document.getElementById('projects-loader');
-    grid.innerHTML = '';
-    repos.forEach((r, i) => {
-      const lang = r.language || 'Python';
-      const color = langColors[lang] || langColors.default;
-      const topics = (r.topics || []).slice(0, 4);
-      grid.innerHTML += `
-        <div class="project-card rounded-2xl p-6 flex flex-col gap-4 reveal" style="animation-delay:${i * 80}ms">
-          <div class="flex items-start justify-between gap-2">
-            <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-                 style="background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(139,92,246,0.15));border:1px solid rgba(255,255,255,0.06)">
-              <svg width="16" height="16" fill="none" stroke="${color}" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>
-              </svg>
-            </div>
-            <div class="flex items-center gap-1 text-xs" style="color:#64748B;font-family:'JetBrains Mono',monospace">
-              <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              ${r.stargazers_count || 0}
-            </div>
-          </div>
-
-          <div>
-            <h3 class="text-sm font-semibold mb-1.5" style="color:#E2E8F0">
-              ${r.name.replace(/-/g, ' ')}
-            </h3>
-            <p class="text-xs leading-relaxed" style="color:#64748B">
-              ${r.description || 'A data analytics project built with modern tooling.'}
-            </p>
-          </div>
-
-          <div class="flex flex-wrap gap-1.5">
-            ${topics.map(t => `<span class="text-xs px-2.5 py-1 rounded-full"
-              style="background:rgba(59,130,246,0.1);color:#60A5FA;border:1px solid rgba(59,130,246,0.2)">${t}</span>`).join('')}
-          </div>
-
-          <div class="mt-auto pt-2 flex items-center justify-between" style="border-top:1px solid rgba(255,255,255,0.05)">
-            <div class="flex items-center gap-1.5 text-xs" style="color:#64748B">
-              <span class="w-2 h-2 rounded-full" style="background:${color}"></span>
-              ${lang}
-            </div>
-            <a href="${r.html_url}" target="_blank" rel="noopener"
-               class="text-xs font-medium flex items-center gap-1"
-               style="color:#60A5FA;transition:color .2s"
-               onmouseover="this.style.color='#A78BFA'" onmouseout="this.style.color='#60A5FA'">
-              View →
-            </a>
-          </div>
-        </div>`;
+    // ═══════════════════════════════════════════════════════════════════
+    //  2. MOBILE MENU
+    // ═══════════════════════════════════════════════════════════════════
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', open);
     });
-    loader.classList.add('hidden');
-    grid.classList.remove('hidden');
-    initReveal();
-  }
+    // Close when a link is tapped
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    });
 
-  async function fetchProjects() {
-    try {
-      const res = await fetch('https://api.github.com/users/Timileyin014/repos?sort=updated&per_page=6');
-      if (!res.ok) throw new Error('rate limited');
-      const data = await res.json();
-      const valid = data.filter(r => !r.fork && r.name !== 'Timileyin014');
-      renderProjects(valid.length >= 3 ? valid.slice(0,6) : fallbackProjects);
-    } catch {
-      renderProjects(fallbackProjects);
-    }
-  }
-  fetchProjects();
+    // ═══════════════════════════════════════════════════════════════════
+    //  3. SCROLL-REVEAL (Intersection Observer)
+    // ═══════════════════════════════════════════════════════════════════
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-  /* ─── Timeline ────────────────────────────────────── */
-  const events = [
-    {
-      year: '2024 — Present',
-      title: 'Cloud & Modern Data Stack',
-      desc: 'Deep-diving into AWS, Azure, dbt, and Docker. Building production-ready ETL pipelines and data warehousing solutions.',
-      accent: '#22D3EE',
-    },
-    {
-      year: '2023',
-      title: 'Power BI & Advanced Analytics',
-      desc: 'Mastered Power BI, DAX, and Power Query. Delivered 10+ interactive dashboards for business intelligence use cases.',
-      accent: '#8B5CF6',
-    },
-    {
-      year: '2023',
-      title: 'Python for Data Science',
-      desc: 'Completed intensive Python training covering Pandas, NumPy, Matplotlib, Seaborn, and data cleaning workflows.',
-      accent: '#3B82F6',
-    },
-    {
-      year: '2022',
-      title: 'SQL & Database Fundamentals',
-      desc: 'Built a strong foundation in relational databases, query optimisation, and data modelling with PostgreSQL and MySQL.',
-      accent: '#60A5FA',
-    },
-    {
-      year: '2022',
-      title: 'Data Analytics Foundation',
-      desc: 'Started the data journey — Excel, basic statistics, and first exposure to structured data analysis. The spark was lit.',
-      accent: '#A78BFA',
-    },
-  ];
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  const te = document.getElementById('timeline-events');
-  events.forEach((ev, i) => {
-    te.innerHTML += `
-      <div class="relative mb-10 pl-10 reveal" style="animation-delay:${i * 100}ms">
-        <!-- dot -->
-        <div class="absolute left-0 top-1.5 w-3 h-3 rounded-full border-2 -translate-x-[5px]"
-             style="background:${ev.accent};border-color:${ev.accent};box-shadow:0 0 12px ${ev.accent}55"></div>
-        <!-- year badge -->
-        <div class="text-xs mb-2" style="font-family:'JetBrains Mono',monospace;color:${ev.accent}">${ev.year}</div>
-        <h3 class="text-base font-semibold mb-1.5" style="color:#E2E8F0">${ev.title}</h3>
-        <p class="text-sm leading-relaxed" style="color:#64748B">${ev.desc}</p>
-      </div>`;
-  });
+    // ═══════════════════════════════════════════════════════════════════
+    //  4. ANIMATED PROGRESS BARS (fire when card enters viewport)
+    // ═══════════════════════════════════════════════════════════════════
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.bar-fill').forEach(bar => {
+            const w = bar.getAttribute('data-width');
+            // Slight delay for cascade effect
+            setTimeout(() => { bar.style.width = w + '%'; }, 200);
+          });
+          barObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
 
-  /* ─── Skill bar animation ─────────────────────────── */
-  function animateSkillBars() {
-    document.querySelectorAll('.skill-bar-fill').forEach(bar => {
-      const rect = bar.getBoundingClientRect();
-      if (rect.top < window.innerHeight) {
-        bar.style.width = bar.dataset.width;
+    document.querySelectorAll('.glass-card').forEach(card => barObserver.observe(card));
+
+    // ═══════════════════════════════════════════════════════════════════
+    //  5. HERO TYPING ANIMATION
+    // ═══════════════════════════════════════════════════════════════════
+    const typedEl = document.getElementById('typed-text');
+    const phrases = [
+      'Refining data. Training intelligence.',
+      'Auditing models for alignment.',
+      'Building high-fidelity RLHF pipelines.',
+      'Turning noise into signal.',
+    ];
+    let phraseIndex = 0, charIndex = 0, deleting = false;
+
+    function typeLoop() {
+      const current = phrases[phraseIndex];
+      if (!deleting) {
+        typedEl.textContent = current.slice(0, ++charIndex);
+        if (charIndex === current.length) {
+          deleting = true;
+          setTimeout(typeLoop, 2200);
+          return;
+        }
+      } else {
+        typedEl.textContent = current.slice(0, --charIndex);
+        if (charIndex === 0) {
+          deleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+        }
       }
+      setTimeout(typeLoop, deleting ? 38 : 60);
+    }
+    typeLoop();
+
+    // ═══════════════════════════════════════════════════════════════════
+    //  6. ANIMATED COUNTERS (hero stats)
+    // ═══════════════════════════════════════════════════════════════════
+    function animateCounter(el, target, suffix = '') {
+      let start = 0;
+      const duration = 1800;
+      const step = (timestamp) => {
+        if (!start) start = timestamp;
+        const progress = Math.min((timestamp - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // cubic ease-out
+        el.textContent = Math.round(eased * target) + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.getAttribute('data-count'));
+          const suffix = el.textContent.includes('%') ? '%' : (target >= 100 ? '+' : (target < 10 ? '+' : '+'));
+          // Pick suffix based on context
+          const suffixMap = { 500: '+', 12: '+', 98: '%', 3: '+' };
+          animateCounter(el, target, suffixMap[target] || '+');
+          counterObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+
+    // ═══════════════════════════════════════════════════════════════════
+    //  7. GITHUB API — fetch repos for Timileyin014 (with fallback)
+    // ═══════════════════════════════════════════════════════════════════
+    const GITHUB_USER = 'Timileyin014';
+    const reposContainer = document.getElementById('github-repos');
+
+    async function fetchGitHubRepos() {
+      try {
+        const res = await fetch(
+          `https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=4&type=public`,
+          { headers: { Accept: 'application/vnd.github.v3+json' } }
+        );
+        if (!res.ok) throw new Error(`GitHub API ${res.status}`);
+        const repos = await res.json();
+        if (!Array.isArray(repos) || repos.length === 0) throw new Error('No repos');
+        renderRepos(repos.slice(0, 4));
+      } catch (err) {
+        console.info('[Portfolio] GitHub API unavailable, showing placeholder repos:', err.message);
+        renderFallbackRepos();
+      }
+    }
+
+    function langColor(lang) {
+      const map = {
+        Python: '#3572A5', JavaScript: '#F1E05A', TypeScript: '#3178C6',
+        Jupyter: '#DA5B0B', SQL: '#336791', Shell: '#89E051',
+      };
+      return map[lang] || '#8896B0';
+    }
+
+    function renderRepos(repos) {
+      reposContainer.innerHTML = `
+        <div class="mb-6 flex items-center gap-3">
+          <span class="eyebrow" style="font-size:0.68rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="color:#5B6AF0;" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            Live GitHub Repositories · @${GITHUB_USER}
+          </span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#28C840;padding:3px 10px;border:1px solid rgba(40,200,64,0.25);border-radius:999px;background:rgba(40,200,64,0.07);">● Live</span>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+          ${repos.map(r => `
+            <a href="${r.html_url}" target="_blank" rel="noopener"
+               class="glass-card p-5 flex flex-col reveal" style="text-decoration:none;min-height:160px;">
+              <div class="flex items-start justify-between mb-3">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5B6AF0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l3-3h12l3 3v12l-3 3H6l-3-3V6z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+                <div class="flex items-center gap-2">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4B5673" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#4B5673;">${r.stargazers_count}</span>
+                </div>
+              </div>
+              <h4 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.8rem;color:#E2E8F0;margin-bottom:6px;word-break:break-word;">${r.name}</h4>
+              <p style="font-family:'Inter',sans-serif;font-size:0.75rem;color:#8896B0;line-height:1.5;flex:1;">
+                ${r.description ? r.description.slice(0, 80) + (r.description.length > 80 ? '…' : '') : 'No description provided.'}
+              </p>
+              ${r.language ? `
+              <div class="flex items-center gap-1.5 mt-4">
+                <span style="width:8px;height:8px;border-radius:50%;background:${langColor(r.language)};flex-shrink:0;" aria-hidden="true"></span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#4B5673;">${r.language}</span>
+              </div>` : ''}
+            </a>
+          `).join('')}
+        </div>
+      `;
+      // Re-observe new reveals
+      reposContainer.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    }
+
+    function renderFallbackRepos() {
+      const placeholders = [
+        { name: 'llm-audit-toolkit',    description: 'Hallucination detection & error taxonomy framework for LLM QA.',      lang: 'Python', stars: 0 },
+        { name: 'rlhf-dataset-curator', description: 'Pipeline for SFT/RLHF preference pair generation and validation.',     lang: 'Python', stars: 0 },
+        { name: 'etl-validator',        description: 'Modular ETL pipeline with schema enforcement and quality reporting.',   lang: 'Python', stars: 0 },
+        { name: 'prompt-eval-suite',    description: 'Systematic prompt evaluation harness with scoring rubrics.',            lang: 'Jupyter', stars: 0 },
+      ];
+      reposContainer.innerHTML = `
+        <div class="mb-6 flex items-center gap-3">
+          <span class="eyebrow" style="font-size:0.68rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="color:#5B6AF0;" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub Repositories · @${GITHUB_USER}
+          </span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#8896B0;padding:3px 10px;border:1px solid #1E2A40;border-radius:999px;background:rgba(30,42,64,0.4);">Placeholder</span>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+          ${placeholders.map(r => `
+            <a href="https://github.com/${GITHUB_USER}" target="_blank" rel="noopener"
+               class="glass-card p-5 flex flex-col reveal" style="text-decoration:none;min-height:160px;">
+              <div class="flex items-start justify-between mb-3">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5B6AF0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l3-3h12l3 3v12l-3 3H6l-3-3V6z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#22D3EE;padding:2px 8px;border:1px solid rgba(34,211,238,0.2);border-radius:999px;background:rgba(34,211,238,0.06);">Soon</span>
+              </div>
+              <h4 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.8rem;color:#E2E8F0;margin-bottom:6px;">${r.name}</h4>
+              <p style="font-family:'Inter',sans-serif;font-size:0.75rem;color:#8896B0;line-height:1.5;flex:1;">${r.description}</p>
+              <div class="flex items-center gap-1.5 mt-4">
+                <span style="width:8px;height:8px;border-radius:50%;background:${langColor(r.lang)};flex-shrink:0;" aria-hidden="true"></span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#4B5673;">${r.lang}</span>
+              </div>
+            </a>
+          `).join('')}
+        </div>
+      `;
+      reposContainer.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    }
+
+    fetchGitHubRepos();
+
+    // ═══════════════════════════════════════════════════════════════════
+    //  8. CONTACT FORM — minimal client-side feedback
+    // ═══════════════════════════════════════════════════════════════════
+    function handleFormSubmit() {
+      const name    = document.getElementById('msg-name').value.trim();
+      const email   = document.getElementById('msg-email').value.trim();
+      const subject = document.getElementById('msg-subject').value.trim();
+      const body    = document.getElementById('msg-body').value.trim();
+      const feedback = document.getElementById('form-feedback');
+
+      if (!name || !email || !body) {
+        feedback.textContent = '⚠ Please fill in all required fields.';
+        feedback.style.color = '#FF5557';
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        feedback.textContent = '⚠ Please enter a valid email address.';
+        feedback.style.color = '#FF5557';
+        return;
+      }
+      // Build mailto link (works without a backend)
+      const mailto = `mailto:your.email@example.com?subject=${encodeURIComponent(subject || 'Portfolio Inquiry')}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${body}`)}`;
+      window.location.href = mailto;
+      feedback.textContent = '✓ Opening your mail client…';
+      feedback.style.color = '#22D3EE';
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    //  9. SMOOTH SCROLL for anchor links (polyfill for older browsers)
+    // ═══════════════════════════════════════════════════════════════════
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
     });
-  }
-  window.addEventListener('scroll', animateSkillBars);
-  animateSkillBars();
 
-  /* ─── Scroll Reveal ───────────────────────────────── */
-  function initReveal() {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.08 });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-  }
-  initReveal();
-
-  /* ─── Contact handler ─────────────────────────────── */
-  function handleContact(btn) {
-    btn.textContent = 'Message Sent ✓';
-    btn.style.background = 'linear-gradient(135deg,#059669,#10B981)';
-    setTimeout(() => {
-      btn.textContent = 'Send Message';
-      btn.style.background = '';
-    }, 3000);
-  }
-
+    // ═══════════════════════════════════════════════════════════════════
+    //  10. SCROLL-PULSE keyframe injection (for hero scroll cue)
+    // ═══════════════════════════════════════════════════════════════════
+    const extraStyles = document.createElement('style');
+    extraStyles.textContent = `
+      @keyframes scrollpulse {
+        0%,100% { opacity: 0.4; transform: scaleY(1); }
+        50%      { opacity: 0.8; transform: scaleY(0.7); }
+      }
+      @keyframes pulse {
+        0%,100% { box-shadow: 0 0 8px #22D3EE; opacity: 1; }
+        50%      { box-shadow: 0 0 20px #22D3EE; opacity: 0.6; }
+      }
+    `;
+    document.head.appendChild(extraStyles);
   </script>
+
 </body>
 </html>
